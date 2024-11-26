@@ -1,0 +1,140 @@
+* Installation
+On MacOS, I specifically use ~d12frosted/emacs-plus~:
+https://github.com/d12frosted/homebrew-emacs-plus
+
+Here are the commands I've used:
+#+BEGIN_SRC sh
+brew tap d12frosted/emacs-plus
+brew install emacs-plus —-with-ctags —-with-dbus —-with-debug —-with-no-frame-refocus --with-native-comp --with-modern-black-variant-icon
+#+END_SRC
+
+* Viewing my configuration
+
+My config follows the comment structure outlined here:
+https://www.gnu.org/software/emacs/manual/html_node/elisp/Comment-Tips.html
+
+The structure is the following:
+- ~;~:
+  - align comment to the same column to the right of the code, explain how
+    code on that line does it's job
+- ~;;~:
+  - align comment to the same level of indentation of the code, describe
+    purpose of following lines or state of program at that point
+  - also used for comments outside of functions
+- ~;;;~:
+  - start at left margin, used for comments to be considered headings
+- ~;;;;~:
+  - start at left margin, used for headings of major sections
+
+Additionally, I like to use comments to link to the specific source of the
+package that I'm using.
+
+Everything is wrapped in ~use-package~. ~consult-outline~ can be used to jump
+from each ~use-package~ declaration.
+
+* Resources
+Here are various resources I've referenced in the past that has helped make my
+emacs configuration what it is today:
+- [[https://www.reddit.com/r/emacs/comments/np6ey4/how_packageel_works_with_use_package/?share_id=s3jeiLwvmdsvfIvV-Jpm_][Reddit post on package.el and use-package]]
+  - Very interesting read on ~package.el~ and ~use-package~ - it shows how to
+    have more control of ~package.el~ and making your config files reflect
+    what is installed
+  - I mentioned this very post in a [[https://bsky.app/profile/cyrialize.dev/post/3lbpioughgc24][thread on Bluesky]]
+- https://manueluberti.eu/posts/2021-03-08-package/
+
+** Advice
+General pieces of advice I've collected throughout my time with Emacs.
+
+- On ~use-package~:
+  - "In general, you should keep :init forms as simple and quick as possible,
+    and put as much as you can get away with into the :config block.
+    This way, deferred loading can help your Emacs to start as quickly
+    as possible."
+    - [[Https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
+
+* To Dos
+** TODO Set up preferred package settings for use-package
+[[https://www.reddit.com/r/emacs/comments/np6ey4/how_packageel_works_with_use_package/?share_id=s3jeiLwvmdsvfIvV-Jpm_][See this reddit post.]]
+
+Set up code to have a ~use-package~ keyword for specifying that a package is
+part of ~package-selected-packages~.
+
+** TODO Set up use-package declartions to have messages
+Use all the keywords to load packages sequentially, load the most important ones
+that you want, and putting all messages during the load - so like there's a
+message when something loads correctly and when it doesnt
+** TODO Read use-package manual
+** TODO Read vertico manual
+** TODO Read embark manual
+** TODO Read consult manual
+** TODO Read marginalia manual
+** TODO Read orderless manual
+
+** TODO Jump to Emacs 30
+
+I may switch from ~straight~ to just using ~use-package~ with ~:vc~
+
+** TODO Look into the package ~citre~
+
+This was previously used when setting up ~ctags~ with the project.
+
+This is an example configuration I had:
+#+BEGIN_SRC elisp
+;; From here: https://github.com/universal-ctags/citre
+(use-package citre
+  :defer t
+  :init
+  ;; This is needed in `:init' block for lazy load to work.
+  (require 'citre-config)
+  ;; Bind your frequently used commands.  Alternatively, you can define them
+  ;; in `citre-mode-map' so you can only use them when `citre-mode' is enabled.
+  (global-set-key (kbd "C-x c j") 'citre-jump)
+  (global-set-key (kbd "C-x c J") 'citre-jump-back)
+  (global-set-key (kbd "C-x c P") 'citre-ace-peek)
+  (global-set-key (kbd "C-x c p") 'citre-peek)
+  (global-set-key (kbd "C-x c u") 'citre-update-this-tags-file)
+  :config
+  (setq
+   ;; Set these if readtags/ctags is not in your path.
+   citre-readtags-program "/usr/local/bin/readtags"
+   citre-ctags-program "/usr/local/bin/ctags"
+   ;; Set this if you use project management plugin like projectile.  It's
+   ;; used for things like displaying paths relatively, see its docstring.
+   citre-project-root-function #'projectile-project-root
+   ;; Set this if you want to always use one location to create a tags file.
+   citre-default-create-tags-file-location 'global-cache
+   ;; See the "Create tags file" section above to know these options
+   citre-use-project-root-when-creating-tags t
+   citre-prompt-language-for-ctags-command t
+   ;; By default, when you open any file, and a tags file can be found for it,
+   ;; `citre-mode' is automatically enabled.  If you only want this to work for
+   ;; certain modes (like `prog-mode'), set it like this.
+   citre-auto-enable-citre-mode-modes '(prog-mode)))
+
+;; Fallback to Citre if reference can't be found within LSP
+;; From: https://github.com/universal-ctags/citre/wiki/Use-Citre-together-with-lsp-mode
+(define-advice xref--create-fetcher (:around (-fn &rest -args) fallback)
+  (let ((fetcher (apply -fn -args))
+        (citre-fetcher
+         (let ((xref-backend-functions '(citre-xref-backend t)))
+           (apply -fn -args))))
+    (lambda ()
+      (or (with-demoted-errors "%s, fallback to citre"
+            (funcall fetcher))
+          (funcall citre-fetcher)))))
+
+;; Use Citre with company
+;; From: https://github.com/universal-ctags/citre/wiki/Use-Citre-together-with-lsp-mode
+(defun company-citre (-command &optional -arg &rest _ignored)
+  "Completion backend of Citre.  Execute COMMAND with ARG and IGNORED."
+  (interactive (list 'interactive))
+  (cl-case -command
+    (interactive (company-begin-backend 'company-citre))
+    (prefix (and (bound-and-true-p citre-mode)
+                 (or (citre-get-symbol) 'stop)))
+    (meta (citre-get-property 'signature -arg))
+    (annotation (citre-capf--get-annotation -arg))
+    (candidates (all-completions -arg (citre-capf--get-collection -arg)))
+    (ignore-case (not citre-completion-case-sensitive))))
+
+#+END_SRC
