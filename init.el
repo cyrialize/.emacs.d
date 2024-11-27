@@ -241,7 +241,7 @@
 ;; https://github.com/emacs-mirror/emacs/blob/master/lisp/savehist.el
 (use-package savehist
   :ensure t
-  :init
+  :config
   (savehist-mode))
 
 ;; https://gitlab.com/fommil/emacs-darcula-theme
@@ -390,10 +390,7 @@
 ;; https://github.com/justbur/emacs-which-key
 (use-package which-key
   :ensure t
-  :commands
-  (which-key-mode)
-
-  :init
+  :config
   (which-key-mode))
 
 (use-package dash
