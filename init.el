@@ -118,7 +118,7 @@
 
 (use-package flymake
   :hook
-  (prog-mode . flymake-mode))
+  (prog-mode))
 
 (use-package flyspell
   :hook
@@ -132,9 +132,7 @@
   (org-mode . flyspell-mode))
 
 (use-package tree-sitter
-  :commands
-  (global-tree-sitter-mode)
-  :init
+  :config
   (global-tree-sitter-mode))
 
 (use-package tree-sitter-langs
@@ -153,7 +151,7 @@
   :custom
   (corfu-auto t)
 
-  :init
+  :config
   (global-corfu-mode))
 
 ;; https://github.com/tarsius/minions
@@ -167,8 +165,8 @@
 (use-package whitespace-cleanup-mode
   :ensure t
 
-  :init
-  (global-whitespace-cleanup-mode t))
+  :config
+  (global-whitespace-cleanup-mode))
 
 ;; https://github.com/Malabarba/smart-mode-line
 (use-package smart-mode-line
