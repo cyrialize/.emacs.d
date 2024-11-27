@@ -41,6 +41,8 @@ emacs configuration what it is today:
     what is installed
   - I mentioned this very post in a [[https://bsky.app/profile/cyrialize.dev/post/3lbpioughgc24][thread on Bluesky]]
 - https://manueluberti.eu/posts/2021-03-08-package/
+- [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][Manual on use-package]]
+
 
 ** Advice
 General pieces of advice I've collected throughout my time with Emacs.
@@ -50,7 +52,7 @@ General pieces of advice I've collected throughout my time with Emacs.
     and put as much as you can get away with into the :config block.
     This way, deferred loading can help your Emacs to start as quickly
     as possible."
-    - [[Https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
+    - [[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
 
 * To Dos
 ** TODO Set up preferred package settings for use-package

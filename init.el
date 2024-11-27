@@ -32,6 +32,7 @@
       '(
 	use-package
 	org-mode
+	corfu
 	minions
 	whitespace-mode
 	whitespace-cleanup-mode
@@ -144,6 +145,16 @@
 (use-package xref)
 
 ;;; Installed Packages
+
+;; https://github.com/minad/corfu
+(use-package corfu
+  :ensure t
+
+  :custom
+  (corfu-auto t)
+
+  :init
+  (global-corfu-mode))
 
 ;; https://github.com/tarsius/minions
 (use-package minions
