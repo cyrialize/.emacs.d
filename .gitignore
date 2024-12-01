@@ -12,7 +12,10 @@ tramp
 transient
 tutorial
 recentf
+tree-sitter
 
+# Private files
+private.el
 
 # MacOS files
 .DS_Store

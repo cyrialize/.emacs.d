@@ -8,6 +8,8 @@ brew tap d12frosted/emacs-plus
 brew install emacs-plus —-with-ctags —-with-dbus —-with-debug —-with-no-frame-refocus --with-native-comp --with-modern-black-variant-icon
 #+END_SRC
 
+I use ~tree-sitter~, which can have language grammars installed via
+~M-x treesit-install-language-grammer~.
 * Viewing my configuration
 
 My config follows the comment structure outlined here:
@@ -55,6 +57,10 @@ General pieces of advice I've collected throughout my time with Emacs.
     - [[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
 
 * To Dos
+** TODO Create a function that downloads tree sitter code you need
+** TODO Write code that allows you to jump between only use-package
+** TODO Write code to check if tree sitter is installed
+** TODO Create a function to check if a file starts with shell shebang
 ** TODO Set up preferred package settings for use-package
 [[https://www.reddit.com/r/emacs/comments/np6ey4/how_packageel_works_with_use_package/?share_id=s3jeiLwvmdsvfIvV-Jpm_][See this reddit post.]]
 

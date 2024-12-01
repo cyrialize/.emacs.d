@@ -26,8 +26,6 @@
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-(package-initialize)
-
 (setq package-selected-packages
       '(
 	use-package
@@ -67,8 +65,13 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(package-initialize)
+
 (eval-when-compile
   (require 'use-package))
+
+(when (file-exists-p "~/.emacs.d/private.el")
+    (load "~/.emacs.d/private.el"))
 
 (defun cyr-reload-packages ()
   "Reload packages by calling applicable package.el commands."
@@ -126,7 +129,10 @@
 
 (use-package org-mode
   :custom
-  (org-startup-folded t)
+  ((org-startup-folded t)
+
+   (org-refile-use-outline-path 'file)
+   (org-refile-targets '((private-org-refile-targets :maxlevel . 1))))
 
   :hook
   (org-mode . flyspell-mode))
