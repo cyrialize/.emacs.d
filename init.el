@@ -52,6 +52,7 @@
 	magit
 	rg
 	xref
+	chruby
 
 	;; Required for magit
 	dash
@@ -87,7 +88,6 @@
 
 (use-package emacs
   :custom
-  (global-hl-line-mode t)
   (scroll-bar-mode nil)
   (tool-bar-mode nil)
 
@@ -111,11 +111,10 @@
 
   :hook
   ((emacs-startup . cyr-load-custom)
+   (after-init . global-hl-line-mode)
+   (after-init . global-whitespace-mode)
    (prog-mode . display-line-numbers-mode)
-   (prog-mode . display-fill-column-indicator-mode))
-
-  :config
-  (global-whitespace-mode))
+   (prog-mode . display-fill-column-indicator-mode)))
 
 (use-package flymake
   :hook
@@ -138,6 +137,8 @@
 (use-package whitespace)
 
 (use-package xref)
+
+(use-package eglot)
 
 ;;; Installed Packages
 
@@ -402,6 +403,13 @@
   :ensure t
   :config
   (rg-enable-default-bindings))
+
+;; https://github.com/plexus/chruby.el
+(use-package chruby
+  :ensure t
+  :hook
+  ((ruby-mode . chruby-use-corresponding)
+   (ruby-ts-mode . chruby-use-corresponding)))
 
 (provide 'init)
 ;;; init.el ends here

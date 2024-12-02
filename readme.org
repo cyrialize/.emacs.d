@@ -8,8 +8,13 @@ brew tap d12frosted/emacs-plus
 brew install emacs-plus —-with-ctags —-with-dbus —-with-debug —-with-no-frame-refocus --with-native-comp --with-modern-black-variant-icon
 #+END_SRC
 
+** Tree Sitter
 I use ~tree-sitter~, which can have language grammars installed via
 ~M-x treesit-install-language-grammer~.
+
+** Language Server Protocols
+I rely upon ~solargraph~ as my Ruby LSP: https://solargraph.org/.
+
 * Viewing my configuration
 
 My config follows the comment structure outlined here:
@@ -57,6 +62,17 @@ General pieces of advice I've collected throughout my time with Emacs.
     - [[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
 
 * To Dos
+** TODO Update chruby code to work with auto switching
+https://github.com/plexus/chruby.el is an old package that doesn't support the
+auto switching of chruby - e.g. the auto detection of .ruby-version and changing
+accordingly
+** TODO Write code to check for .ruby-version and act accordingly
+If there is a .ruby-version, use ~chruby-use-corresponding~ or find it in root
+of project
+
+Otherwise, default to the global ruby choice in ~~/.ruby-version~
+
+And if that doesn't exist, then default to a default setting
 ** TODO Create a function that downloads tree sitter code you need
 ** TODO Write code that allows you to jump between only use-package
 ** TODO Write code to check if tree sitter is installed
