@@ -140,6 +140,10 @@
 
 (use-package eglot)
 
+(use-package delsel
+  :hook
+  (after-init . delete-selection-mode))
+
 ;;; Installed Packages
 
 ;; https://github.com/minad/corfu
