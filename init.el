@@ -49,8 +49,6 @@
 	consult
 	consult-dir
 	which-key
-	tree-sitter
-	tree-sitter-langs
 	magit
 	rg
 	xref
@@ -137,13 +135,6 @@
   :hook
   (org-mode . flyspell-mode))
 
-(use-package tree-sitter
-  :config
-  (global-tree-sitter-mode))
-
-(use-package tree-sitter-langs
-  :ensure t)
-
 (use-package whitespace)
 
 (use-package xref)
@@ -157,22 +148,21 @@
   :custom
   (corfu-auto t)
 
-  :config
-  (global-corfu-mode))
+  :hook
+  (after-init . global-corfu-mode))
 
 ;; https://github.com/tarsius/minions
 (use-package minions
   :ensure t
 
-  :config
-  (minions-mode))
+  :hook (after-init))
 
 ;; https://github.com/purcell/whitespace-cleanup-mode
 (use-package whitespace-cleanup-mode
   :ensure t
 
-  :config
-  (global-whitespace-cleanup-mode))
+  :hook
+  (after-init . global-whitespace-cleanup-mode))
 
 ;; https://github.com/Malabarba/smart-mode-line
 (use-package smart-mode-line
@@ -190,8 +180,6 @@
 ;; https://github.com/emacsorphanage/god-mode
 (use-package god-mode
   :ensure t
-  :init
-  (god-mode)
 
   :custom
   ;; Ensure that no buffer is skipped, so god-mode is set everywhere
@@ -205,7 +193,8 @@
   ;; When god mode is on, sets it to a box
   (defun my-god-mode-update-cursor-type ()
     (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar)))
-  :hook (post-command . my-god-mode-update-cursor-type)
+  :hook ((post-command . my-god-mode-update-cursor-type)
+	 (after-init . god-mode))
 
   ;; Toggle god-mode using the escape key
   :bind (("<escape>" . god-local-mode)
@@ -221,19 +210,18 @@
 ;; https://github.com/minad/vertico
 (use-package vertico
   :ensure t
-  :commands
-  (vertico-mode)
 
   :custom
   (vertico-scroll-margin 0)
   (vertico-count 20)
-
-  :init
-  (vertico-mode)
-  (defvar vertico-cycle)
-
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  (setq vertico-cycle t))
+  (vertico-cycle t)
+
+  :hook
+  (after-init)
+
+  :defines
+  (vertico-cycle))
 
 ;; https://github.com/oantolin/orderless
 (use-package orderless
@@ -266,15 +254,12 @@
 ;; https://github.com/minad/marginalia
 (use-package marginalia
   :ensure t
-  :commands
-  (marginalia-mode)
+
+  :hook (after-init)
   ;; Either bind `marginalia-cycle` globally or only in the minibuffer
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
-         ("M-A" . marginalia-cycle))
-
-  :init
-  (marginalia-mode))
+         ("M-A" . marginalia-cycle)))
 
 ;; https://github.com/oantolin/embark
 (use-package embark
@@ -396,8 +381,7 @@
 ;; https://github.com/justbur/emacs-which-key
 (use-package which-key
   :ensure t
-  :config
-  (which-key-mode))
+  :hook (after-init))
 
 (use-package dash
   :ensure t)
