@@ -53,6 +53,10 @@
 	rg
 	xref
 	chruby
+	nerd-icons
+	nerd-icons-completion
+	nerd-icons-corfu
+	nerd-icons-dired
 
 	;; Required for magit
 	dash
@@ -113,6 +117,7 @@
   ((emacs-startup . cyr-load-custom)
    (after-init . global-hl-line-mode)
    (after-init . global-whitespace-mode)
+   (after-init . nerd-icons-completion-mode)
    (prog-mode . display-line-numbers-mode)
    (prog-mode . display-fill-column-indicator-mode)))
 
@@ -414,6 +419,31 @@
   :hook
   ((ruby-mode . chruby-use-corresponding)
    (ruby-ts-mode . chruby-use-corresponding)))
+
+;; https://github.com/rainstormstudio/nerd-icons.el
+(use-package nerd-icons
+  :ensure t)
+
+;; https://github.com/rainstormstudio/nerd-icons-completion
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :hook
+  (marginalia-mode-hook . nerd-icons-completion-marginalia-setup))
+
+;; https://github.com/LuigiPiucco/nerd-icons-corfu
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :hook
+  (corfu-margin-formatters . nerd-icons-corfu-formatter))
+
+;; https://github.com/rainstormstudio/nerd-icons-dired
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 
 (provide 'init)
 ;;; init.el ends here
