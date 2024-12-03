@@ -133,6 +133,8 @@
   :custom
   ((org-startup-folded t)
 
+   (whitespace-style '(face empty tabs trailing))
+
    (org-refile-use-outline-path 'file)
    (org-refile-targets '((private-org-refile-targets :maxlevel . 1))))
 
