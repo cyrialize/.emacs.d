@@ -57,6 +57,8 @@
 	nerd-icons-completion
 	nerd-icons-corfu
 	nerd-icons-dired
+	inf-ruby
+	yard-mode
 
 	;; Required for magit
 	dash
@@ -108,6 +110,7 @@
   (sentence-end-double-space nil)
 
   (whitespace-style '(face empty tabs lines-tail trailing))
+  (whitepsace-line-column 80)
 
   :init
   ;; Ask y or n instead of yes or no
@@ -132,8 +135,6 @@
 (use-package org-mode
   :custom
   ((org-startup-folded t)
-
-   (whitespace-style '(face empty tabs trailing))
 
    (org-refile-use-outline-path 'file)
    (org-refile-targets '((private-org-refile-targets :maxlevel . 1))))
@@ -417,10 +418,26 @@
 
 ;; https://github.com/plexus/chruby.el
 (use-package chruby
+  :ensure t)
+
+;; https://github.com/nonsequitur/inf-ruby
+(use-package inf-ruby
+  :ensure t)
+
+;; https://github.com/pd/yard-mode.el
+(use-package yard-mode
   :ensure t
-  :hook
-  ((ruby-mode . chruby-use-corresponding)
-   (ruby-ts-mode . chruby-use-corresponding)))
+  :hook (ruby-mode ruby-ts-mode))
+
+(use-package ruby-mode
+  :mode "\\.rb\\'"
+  :interpreter "ruby"
+  :hook (chruby-use-corresponding))
+
+(use-package ruby-ts-mode
+  :mode "\\.rb\\'"
+  :interpreter "ruby"
+  :hook (chruby-use-corresponding))
 
 ;; https://github.com/rainstormstudio/nerd-icons.el
 (use-package nerd-icons
