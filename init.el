@@ -81,14 +81,19 @@
 (defun cyr-reload-packages ()
   "Reload packages by calling applicable package.el commands."
   (interactive)
-  (package-refresh-contents)
-  (package-install-selected-packages)
-  (package-autoremove))
+  (progn
+    (package-refresh-contents)
+    (package-install-selected-packages)
+    (package-autoremove)))
 
-(defun cyr-load-custom ()
-  "Set the custom var and load the custom file."
-  (setq custom-file "~/.emacs.d/custom.el")
-  (load custom-file))
+(defun cyr-load-custom (custom)
+  "Set the CUSTOM variable and load the custom file."
+  (if (file-exists-p custom)
+      (progn
+	(message "Loading custom file: %s" custom)
+	(setq custom-file custom)
+	(load custom-file))
+    (message "Custom file does not exist: %s" custom)))
 
 ;;; Built-In Packages
 
@@ -117,7 +122,7 @@
   (fset 'yes-or-no-p 'y-or-n-p)
 
   :hook
-  ((emacs-startup . cyr-load-custom)
+  ((emacs-startup . (lambda () (cyr-load-custom "~/.emacs.d/custom.el")))
    (after-init . global-hl-line-mode)
    (after-init . global-whitespace-mode)
    (after-init . nerd-icons-completion-mode)
