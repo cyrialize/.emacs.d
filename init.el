@@ -30,7 +30,10 @@
       '(
 	use-package
 	org-mode
+	eldoc
+	eldoc-box
 	corfu
+	cape
 	minions
 	whitespace-mode
 	whitespace-cleanup-mode
@@ -159,6 +162,16 @@
 
 ;;; Installed Packages
 
+;; https://elpa.gnu.org/packages/eldoc.html
+(use-package eldoc
+  :ensure t
+  :init
+  (global-eldoc-mode))
+
+;; https://github.com/casouri/eldoc-box
+(use-package eldoc-box
+  :ensure t)
+
 ;; https://github.com/minad/corfu
 (use-package corfu
   :ensure t
@@ -168,6 +181,23 @@
 
   :hook
   (after-init . global-corfu-mode))
+
+;; https://github.com/minad/cape
+(use-package cape
+  :ensure t
+
+  :bind ("C-c p" . cape-prefix-map)
+
+  :custom
+  (cape-dabbrev-min-length 3)
+
+  :config
+  (setq-local completion-at-point-functions
+              (list (cape-capf-super
+		     #'cape-dabbrev
+		     #'cape-keyword
+		     #'cape-elisp-symbol
+		     #'cape-dict))))
 
 ;; https://github.com/tarsius/minions
 (use-package minions

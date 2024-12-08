@@ -62,6 +62,11 @@ General pieces of advice I've collected throughout my time with Emacs.
     - [[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
 
 * To Dos
+** TODO Check out lsp-bridge
+Is it possible to have it work alongside ~corfu~, when you aren't using it?
+
+Basically, doing something like toggling ~corfu~ off when ~lsp-bridge~ is
+turned on.
 ** TODO Update chruby code to work with auto switching
 https://github.com/plexus/chruby.el is an old package that doesn't support the
 auto switching of chruby - e.g. the auto detection of .ruby-version and changing
