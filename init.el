@@ -30,6 +30,8 @@
       '(
 	use-package
 	org-mode
+	toc-org
+	helm
 	eldoc
 	eldoc-box
 	corfu
@@ -162,11 +164,34 @@
 
 ;;; Installed Packages
 
+;; https://github.com/emacs-helm/helm
+(use-package helm
+  :disabled
+  :ensure t
+
+  :custom
+  ((helm-M-x-fuzzy-match t)
+   (helm-buffer-fuzzy-matching t)
+   (helm-recentf-fuzzy-match t))
+
+  :bind
+  (("M-x" . helm-M-x)
+   ("C-x r b" . helm-filtered-bookmarks)
+   ("C-x C-f" . helm-find-files)
+   ("C-x b" . helm-mini))
+
+  :hook
+  (after-init . helm-mode))
+
+;; https://github.com/snosov1/toc-org
+(use-package toc-org
+  :ensure t)
+
 ;; https://elpa.gnu.org/packages/eldoc.html
 (use-package eldoc
   :ensure t
-  :init
-  (global-eldoc-mode))
+  :hook
+  (after-init . global-eldoc-mode))
 
 ;; https://github.com/casouri/eldoc-box
 (use-package eldoc-box
