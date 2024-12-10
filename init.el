@@ -101,6 +101,16 @@
 	(load custom-file))
     (message "Custom file does not exist: %s" custom)))
 
+(defun cyr-load-whitespace-style ()
+  "Set whitespace style locally before calling whitespace mode."
+  (progn
+    (if (eq major-mode 'org-mode)
+	(setq-local whitespace-style '(face empty tabs trailing))
+      (setq-local whitespace-style '(face empty tabs lines-tail trailing)))
+    (whitespace-mode)))
+
+(add-hook 'find-file-hook 'cyr-load-whitespace-style)
+
 ;;; Built-In Packages
 
 (use-package emacs
@@ -120,7 +130,6 @@
 
   (sentence-end-double-space nil)
 
-  (whitespace-style '(face empty tabs lines-tail trailing))
   (whitepsace-line-column 80)
 
   :init
@@ -130,7 +139,6 @@
   :hook
   ((emacs-startup . (lambda () (cyr-load-custom "~/.emacs.d/custom.el")))
    (after-init . global-hl-line-mode)
-   (after-init . global-whitespace-mode)
    (after-init . nerd-icons-completion-mode)
    (prog-mode . display-line-numbers-mode)
    (prog-mode . display-fill-column-indicator-mode)))
