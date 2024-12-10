@@ -56,6 +56,7 @@
 	which-key
 	magit
 	rg
+	treesit-auto
 	xref
 	chruby
 	nerd-icons
@@ -475,6 +476,15 @@
   :ensure t
   :config
   (rg-enable-default-bindings))
+
+;; https://github.com/renzmann/treesit-auto
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 ;; https://github.com/plexus/chruby.el
 (use-package chruby

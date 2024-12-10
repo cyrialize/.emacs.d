@@ -49,7 +49,14 @@ emacs configuration what it is today:
   - I mentioned this very post in a [[https://bsky.app/profile/cyrialize.dev/post/3lbpioughgc24][thread on Bluesky]]
 - https://manueluberti.eu/posts/2021-03-08-package/
 - [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][Manual on use-package]]
-
+- https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
+  - Great article that serves as a starting point for an Emacs config
+  - As someone who has used Emacs for years, I learned a lot here!
+- http://xahlee.info/emacs/emacs/elisp.html
+  - Xahlee has so much info, this Elisp tutorial is a great starting point
+- https://github.com/p3r7/awesome-elisp
+- https://learnxinyminutes.com/docs/elisp/
+- https://karthinks.com/tags/emacs/
 
 ** Advice
 General pieces of advice I've collected throughout my time with Emacs.
