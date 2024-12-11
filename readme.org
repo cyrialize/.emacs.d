@@ -69,6 +69,7 @@ General pieces of advice I've collected throughout my time with Emacs.
     - [[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
 
 * To Dos
+** TODO set up auto updating packages
 ** TODO Check out lsp-bridge
 Is it possible to have it work alongside ~corfu~, when you aren't using it?
 

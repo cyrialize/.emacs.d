@@ -65,6 +65,8 @@
 	nerd-icons-dired
 	inf-ruby
 	yard-mode
+	yasnippet
+	yasnippet-snippets
 
 	;; Required for magit
 	dash
@@ -154,7 +156,7 @@
 (use-package org-mode
   :custom
   ((org-startup-folded t)
-
+   (org-startup-truncated nil)
    (org-refile-use-outline-path 'file)
    (org-refile-targets '((private-org-refile-targets :maxlevel . 1))))
 
@@ -506,6 +508,15 @@
 (use-package yard-mode
   :ensure t
   :hook (ruby-mode ruby-ts-mode))
+
+;; https://github.com/joaotavora/yasnippet
+(use-package yasnippet
+  :ensure t
+  :hook (after-init . yas-global-mode))
+
+;; https://github.com/AndreaCrotti/yasnippet-snippets
+(use-package yasnippet-snippets
+  :ensure t)
 
 (use-package ruby-mode
   :mode "\\.rb\\'"
