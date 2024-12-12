@@ -109,16 +109,13 @@
   "Load the private.el file if it exists."
   (let ((private "~/.emacs.d/private.el"))
     (if (file-exists-p private)
-	(progn
-	  (message "Loading private file: %s" private)
-	  (load private))
+	(load private)
       (message "Private file does not exist: %s" private))))
 
 (defun cyr-load-custom (custom)
   "Set the CUSTOM variable and load the custom file."
   (if (file-exists-p custom)
       (progn
-	(message "Loading custom file: %s" custom)
 	(setq custom-file custom)
 	(load custom-file))
     (message "Custom file does not exist: %s" custom)))
