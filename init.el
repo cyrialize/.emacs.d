@@ -31,6 +31,7 @@
 	use-package
 	org-mode
 	toc-org
+	exec-path-from-shell
 	helm
 	eldoc
 	eldoc-box
@@ -83,8 +84,18 @@
 (eval-when-compile
   (require 'use-package))
 
-(when (file-exists-p "~/.emacs.d/private.el")
-    (load "~/.emacs.d/private.el"))
+(defun cyr-exec-path-from-shell ()
+  "Run `exec-path-from-shell-initialize` with extra messaging."
+  (let ((exec-path-from-shell-installed (featurep 'exec-path-from-shell))
+        (shell-system (memq window-system '(mac ns x))))
+    (if (and exec-path-from-shell-installed shell-system)
+        (progn
+          (message "Initializing exec path from shell")
+          (exec-path-from-shell-initialize))
+      (message
+       "Unable to init exec path from shell. Installed %s, Shell system %s"
+       exec-path-from-shell-installed
+       shell-system))))
 
 (defun cyr-reload-packages ()
   "Reload packages by calling applicable package.el commands."
@@ -93,6 +104,15 @@
     (package-refresh-contents)
     (package-install-selected-packages)
     (package-autoremove)))
+
+(defun cyr-load-private ()
+  "Load the private.el file if it exists."
+  (let ((private "~/.emacs.d/private.el"))
+    (if (file-exists-p private)
+	(progn
+	  (message "Loading private file: %s" private)
+	  (load private))
+      (message "Private file does not exist: %s" private))))
 
 (defun cyr-load-custom (custom)
   "Set the CUSTOM variable and load the custom file."
@@ -140,6 +160,8 @@
 
   :hook
   ((emacs-startup . (lambda () (cyr-load-custom "~/.emacs.d/custom.el")))
+   (emacs-startup . cyr-load-private)
+   (emacs-startup . cyr-exec-path-from-shell)
    (after-init . global-hl-line-mode)
    (after-init . nerd-icons-completion-mode)
    (prog-mode . display-line-numbers-mode)
@@ -174,6 +196,10 @@
   (after-init . delete-selection-mode))
 
 ;;; Installed Packages
+
+;; https://github.com/purcell/exec-path-from-shell
+(use-package exec-path-from-shell
+  :ensure t)
 
 ;; https://github.com/emacs-helm/helm
 (use-package helm
