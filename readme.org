@@ -14,7 +14,6 @@ I use ~tree-sitter~, which can have language grammars installed via
 
 ** Language Server Protocols
 I rely upon ~solargraph~ as my Ruby LSP: https://solargraph.org/.
-
 * Viewing my configuration
 
 My config follows the comment structure outlined here:
@@ -96,7 +95,7 @@ And if that doesn't exist, then default to a default setting
 Set up code to have a ~use-package~ keyword for specifying that a package is
 part of ~package-selected-packages~.
 
-** TODO Set up use-package declartions to have messages
+** TODO Set up use-package declarations to have messages
 Use all the keywords to load packages sequentially, load the most important ones
 that you want, and putting all messages during the load - so like there's a
 message when something loads correctly and when it doesnt

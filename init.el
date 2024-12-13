@@ -32,6 +32,7 @@
 	org-mode
 	toc-org
 	exec-path-from-shell
+	jinx
 	helm
 	eldoc
 	eldoc-box
@@ -168,10 +169,6 @@
   :hook
   (prog-mode))
 
-(use-package flyspell
-  :hook
-  (prog-mode . flyspell-prog-mode))
-
 (use-package org-mode
   :custom
   ((org-startup-folded t)
@@ -197,6 +194,13 @@
 ;; https://github.com/purcell/exec-path-from-shell
 (use-package exec-path-from-shell
   :ensure t)
+
+;; https://github.com/minad/jinx
+(use-package jinx
+  :ensure t
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
 
 ;; https://github.com/emacs-helm/helm
 (use-package helm
