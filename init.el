@@ -162,7 +162,6 @@
   ((emacs-startup . (lambda () (cyr-load-custom "~/.emacs.d/custom.el")))
    (emacs-startup . cyr-load-private)
    (emacs-startup . cyr-exec-path-from-shell)
-   (after-init . treemacs-start-on-boot)
    (after-init . tab-bar-mode)
    (after-init . global-hl-line-mode)
    (after-init . nerd-icons-completion-mode)
@@ -429,8 +428,6 @@
   :after (treemacs)
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
-
-(treemacs-start-on-boot)
 
 ;; https://github.com/minad/vertico
 (use-package vertico
