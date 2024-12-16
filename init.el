@@ -693,16 +693,3 @@
 
 (provide 'init)
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(treemacs-tab-bar treemacs-magit treemacs-icons-dired use-package org-mode toc-org pkg-info exec-path-from-shell jinx helm eldoc eldoc-box corfu cape minions whitespace-mode whitespace-cleanup-mode smart-mode-line dashboard god-mode treemacs vertico orderless savehist darcula-theme restart-emacs flymake marginalia embark embark-consult consult consult-dir which-key magit rg treesit-auto xref chruby nerd-icons nerd-icons-completion nerd-icons-corfu nerd-icons-dired inf-ruby yard-mode yasnippet yasnippet-snippets dash transient with-editor)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
