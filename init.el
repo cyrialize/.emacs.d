@@ -71,6 +71,7 @@
 	yard-mode
 	yasnippet
 	yasnippet-snippets
+	hl-todo
 
 	;; Required for magit
 	dash
@@ -689,6 +690,11 @@
   :ensure t
   :hook
   (dired-mode . nerd-icons-dired-mode))
+
+;; https://github.com/tarsius/hl-todo
+(use-package hl-todo
+  :ensure t
+  :hook (prog-mode))
 
 
 (provide 'init)
