@@ -47,27 +47,42 @@ emacs configuration what it is today:
     what is installed
   - I mentioned this very post in a [[https://bsky.app/profile/cyrialize.dev/post/3lbpioughgc24][thread on Bluesky]]
 - https://manueluberti.eu/posts/2021-03-08-package/
+  - Good post on ~straight~ versus just using ~package.el~ - I agree with it, which is why I also dropped ~straight~
+  - ~straight~ is still an amazing package though, and I wouldn't be surprised if I switched back to it
 - [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][Manual on use-package]]
 - https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
   - Great article that serves as a starting point for an Emacs config
   - As someone who has used Emacs for years, I learned a lot here!
+- https://github.com/emacs-tw/awesome-emacs
+  - I reference to these two lists often, and I try to contribute to ~awesome-emacs~ whenever I can!
+- https://github.com/caisah/emacs.dz
+  - Collection of amazing Emacs configurations!
+- https://karthinks.com/tags/emacs/
+- https://www.masteringemacs.org/all-articles
+
+** Elisp
+- https://learnxinyminutes.com/docs/elisp/
+  - Learn X in Y minutes is a great resource in general and I reference this guide often
 - http://xahlee.info/emacs/emacs/elisp.html
   - Xahlee has so much info, this Elisp tutorial is a great starting point
 - https://github.com/p3r7/awesome-elisp
-- https://learnxinyminutes.com/docs/elisp/
-- https://karthinks.com/tags/emacs/
 
 ** Advice
 General pieces of advice I've collected throughout my time with Emacs.
 
-- On ~use-package~:
-  - "In general, you should keep :init forms as simple and quick as possible,
-    and put as much as you can get away with into the :config block.
-    This way, deferred loading can help your Emacs to start as quickly
-    as possible."
-    - [[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
+*** Use Package
+"In general, you should keep :init forms as simple and quick as possible,
+ and put as much as you can get away with into the :config block.
+ This way, deferred loading can help your Emacs to start as quickly
+ as possible."
+
+[[https://github.com/jwiegley/use-package?tab=readme-ov-file#information-about-package-loads][From the use-package readme]]
+
+If you are having trouble understanding why your ~use-package~ declaration isn't working, try placing your cursor after the declaration and doing ~M-x pp-macroexpand-last-sexp~. This command prints out the actual code that ~use-package~ generates.
 
 * To Dos
+** TODO set up tempel and hippie expand
+** TODO set up dumb jump
 ** TODO set up auto updating packages
 ** TODO Check out lsp-bridge
 Is it possible to have it work alongside ~corfu~, when you aren't using it?
