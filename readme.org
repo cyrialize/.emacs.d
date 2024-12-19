@@ -93,15 +93,9 @@ turned on.
 https://github.com/plexus/chruby.el is an old package that doesn't support the
 auto switching of chruby - e.g. the auto detection of .ruby-version and changing
 accordingly
-** TODO Write code to check for .ruby-version and act accordingly
-If there is a .ruby-version, use ~chruby-use-corresponding~ or find it in root
-of project
-
-Otherwise, default to the global ruby choice in ~~/.ruby-version~
-
-And if that doesn't exist, then default to a default setting
+** TODO Update Ruby hooks to run chruby-use-corresponding when opening a ruby file or project
+If no ~.ruby-version~ is found within the project or globally, then default to a setting within ~init.el~
 ** TODO Create a function that downloads tree sitter code you need
-** TODO Write code that allows you to jump between only use-package
 ** TODO Write code to check if tree sitter is installed
 ** TODO Create a function to check if a file starts with shell shebang
 ** TODO Set up preferred package settings for use-package
@@ -109,20 +103,13 @@ And if that doesn't exist, then default to a default setting
 
 Set up code to have a ~use-package~ keyword for specifying that a package is
 part of ~package-selected-packages~.
-
-** TODO Set up use-package declarations to have messages
-Use all the keywords to load packages sequentially, load the most important ones
-that you want, and putting all messages during the load - so like there's a
-message when something loads correctly and when it doesnt
 ** TODO Read use-package manual
 ** TODO Read vertico manual
 ** TODO Read embark manual
 ** TODO Read consult manual
 ** TODO Read marginalia manual
 ** TODO Read orderless manual
-
 ** TODO Jump to Emacs 30
-
 I may switch from ~straight~ to just using ~use-package~ with ~:vc~
 
 ** TODO Look into the package ~citre~
