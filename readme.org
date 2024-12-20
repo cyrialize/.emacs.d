@@ -81,6 +81,12 @@ General pieces of advice I've collected throughout my time with Emacs.
 If you are having trouble understanding why your ~use-package~ declaration isn't working, try placing your cursor after the declaration and doing ~M-x pp-macroexpand-last-sexp~. This command prints out the actual code that ~use-package~ generates.
 
 * To Dos
+** TODO update awesome emacs to include
+fido-mode
+tempo (snippet)
+skeleton(snippet)
+hippie expand (completion)
+project.el (project mgmt)
 ** TODO set up tempel and hippie expand
 ** TODO set up dumb jump
 ** TODO set up auto updating packages

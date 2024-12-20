@@ -14,6 +14,7 @@
 ;;
 ;; - Built-In Packages
 ;;   - `use-package` declarations for built-in packages
+
 ;;
 ;; - Installed Packages
 ;;   - `use-package` declarations for installed packages
@@ -134,6 +135,21 @@
 
 (add-hook 'find-file-hook 'cyr-load-whitespace-style)
 
+(defun cyr-favorite-commands ()
+  "A list of my favorite commands tied to this function for quick reference."
+  (interactive)
+  (call-interactively
+   (intern (completing-read "Choose one: " '(consult-bookmark
+					     consult-flymake
+					     consult-goto-line
+					     consult-outline
+					     consult-imenu
+					     comment-or-uncomment-region
+					     treemacs
+					     whitespace-cleanup)))))
+
+(global-set-key (kbd "C-i") 'cyr-favorite-commands)
+
 ;;; Built-In Packages
 
 (use-package emacs
@@ -166,6 +182,7 @@
    (after-init . tab-bar-mode)
    (after-init . global-hl-line-mode)
    (after-init . nerd-icons-completion-mode)
+   (after-init . column-number-mode)
    (prog-mode . display-line-numbers-mode)
    (prog-mode . display-fill-column-indicator-mode)))
 
@@ -493,12 +510,22 @@
    ("C-;" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
 
-  :init
-
-  ;; Optionally replace the key help with a completing-read interface
-  (setq prefix-help-command #'embark-prefix-help-command)
+  :custom
+  (embark-prompter 'embark-completing-read-prompter)
+  (embark-indicators '(embark-minimal-indicator
+		       embark-highlight-indicator
+		       embark-isearch-highlight-indicator))
 
   :config
+  ;; Custom embark keymaps
+  (defvar-keymap cyr-embark-code-map
+    :doc "Commands always used while programming"
+    "c" #'comment-or-uncomment-region
+    "w" #'whitespace-cleanup-region
+    "d" #'delete-region
+    "j" #'json-pretty-print)
+
+  (add-to-list 'embark-keymap-alist '(region . cyr-embark-code-map))
 
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
@@ -695,7 +722,6 @@
 (use-package hl-todo
   :ensure t
   :hook (prog-mode))
-
 
 (provide 'init)
 ;;; init.el ends here
