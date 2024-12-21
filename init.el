@@ -34,6 +34,7 @@
 	toc-org
 	pkg-info
 	exec-path-from-shell
+	format-all
 	jinx
 	helm
 	eldoc
@@ -146,7 +147,8 @@
 					     consult-imenu
 					     comment-or-uncomment-region
 					     treemacs
-					     whitespace-cleanup)))))
+					     whitespace-cleanup
+					     highlight-phrase)))))
 
 (global-set-key (kbd "C-i") 'cyr-favorite-commands)
 
@@ -219,6 +221,12 @@
 ;; https://github.com/purcell/exec-path-from-shell
 (use-package exec-path-from-shell
   :ensure t)
+
+;; https://github.com/lassik/emacs-format-all-the-code
+(use-package format-all
+  :ensure t
+  :commands format-all-mode
+  :hook (prog-mode . format-all-mode))
 
 ;; https://github.com/minad/jinx
 (use-package jinx
