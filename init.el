@@ -74,6 +74,7 @@
 	yasnippet
 	yasnippet-snippets
 	hl-todo
+	web-mode
 
 	;; Required for magit
 	dash
@@ -489,8 +490,6 @@
 ;; https://gitlab.com/fommil/emacs-darcula-theme
 (use-package darcula-theme
   :ensure t
-  :config
-  (set-frame-font "Jetbrains Mono-14")
 
   :init
   (load-theme 'darcula t))
@@ -531,7 +530,8 @@
     "c" #'comment-or-uncomment-region
     "w" #'whitespace-cleanup-region
     "d" #'delete-region
-    "j" #'json-pretty-print)
+    "j" #'json-pretty-print
+    "e" #'elisp-eval-region-or-buffer)
 
   (add-to-list 'embark-keymap-alist '(region . cyr-embark-code-map))
 
@@ -730,6 +730,25 @@
 (use-package hl-todo
   :ensure t
   :hook (prog-mode))
+
+;; https://web-mode.org/
+(use-package web-mode
+  :ensure t
+
+  :custom
+  (web-mode-code-indent-offset 2)
+  (web-mode-attr-indent-offset 2)
+  (web-mode-attr-value-indent-offset 2)
+
+  :mode
+  (("\\.phtml\\'" . web-mode)
+   ("\\.php\\'" . web-mode)
+   ("\\.tpl\\'" . web-mode)
+   ("\\.[agj]sp\\'" . web-mode)
+   ("\\.as[cp]x\\'" . web-mode)
+   ("\\.erb\\'" . web-mode)
+   ("\\.mustache\\'" . web-mode)
+   ("\\.djhtml\\'" . web-mode)))
 
 (provide 'init)
 ;;; init.el ends here

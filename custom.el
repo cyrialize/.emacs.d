@@ -21,7 +21,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Hack" :foundry "SRC" :slant normal :weight normal :height 128 :width normal))))
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "#2B2B2B" :foreground "#a9b7c6" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 140 :width normal :foundry "nil" :family "JetBrains Mono"))))
  '(bold ((t (:foreground "yellow green" :weight bold))))
  '(org-code ((t (:foreground "deep sky blue" :box (:line-width (1 . 1) :color "dark gray") :family "hack"))))
  '(org-level-1 ((t (:inherit default :extend nil :foreground "#DFAF8F" :weight bold :height 1.25))))

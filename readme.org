@@ -87,6 +87,7 @@ tempo (snippet)
 skeleton(snippet)
 hippie expand (completion)
 project.el (project mgmt)
+chruby (ruby)
 ** TODO set up tempel and hippie expand
 ** TODO set up dumb jump
 ** TODO set up auto updating packages
