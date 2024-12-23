@@ -739,9 +739,14 @@
   (web-mode-code-indent-offset 2)
   (web-mode-attr-indent-offset 2)
   (web-mode-attr-value-indent-offset 2)
+  (web-mode-markup-indent-offset 2)
+  (web-mode-markup-comment-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-enable-current-element-highlight t)
 
   :mode
   (("\\.phtml\\'" . web-mode)
+   ("\\.html\\'" . web-mode)
    ("\\.php\\'" . web-mode)
    ("\\.tpl\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
