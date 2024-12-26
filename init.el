@@ -229,6 +229,24 @@
   :commands format-all-mode
   :hook (prog-mode . format-all-mode))
 
+(eval-after-load 'format-all
+  '(add-hook 'web-mode-hook
+             (lambda ()
+               (setq format-all-formatters
+                     '(("HTML" (html-tidy
+				"--gnu-emacs"
+				"yes"
+				"--indent"
+				"yes"
+				"--indent-spaces"
+				"2"
+				"--wrap"
+				"80"
+				"--tidy-mark"
+				"no"
+				"-q"
+				)))))))
+
 ;; https://github.com/minad/jinx
 (use-package jinx
   :ensure t
