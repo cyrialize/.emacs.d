@@ -75,6 +75,8 @@
 	yasnippet-snippets
 	hl-todo
 	web-mode
+	zenburn-theme
+	ef-themes
 
 	;; Required for magit
 	dash
@@ -508,9 +510,25 @@
 ;; https://gitlab.com/fommil/emacs-darcula-theme
 (use-package darcula-theme
   :ensure t
+  :disabled
 
   :init
   (load-theme 'darcula t))
+
+;; https://github.com/bbatsov/zenburn-emacs
+(use-package zenburn-theme
+  :ensure t
+  :disabled
+
+  :init
+  (load-theme 'zenburn t))
+
+;; https://github.com/protesilaos/ef-themes
+(use-package ef-themes
+  :ensure t
+
+  :init
+  (load-theme 'ef-dream t))
 
 ;; https://github.com/iqbalansari/restart-emacs
 (use-package restart-emacs
