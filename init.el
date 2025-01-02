@@ -77,6 +77,7 @@
 	web-mode
 	zenburn-theme
 	ef-themes
+	markdown-mode
 
 	;; Required for magit
 	dash
@@ -732,6 +733,10 @@
    ("\\.erb\\'" . web-mode)
    ("\\.mustache\\'" . web-mode)
    ("\\.djhtml\\'" . web-mode)))
+
+;; https://github.com/jrblevin/markdown-mode
+(use-package markdown-mode
+  :ensure t)
 
 (provide 'init)
 ;;; init.el ends here
