@@ -81,6 +81,10 @@ General pieces of advice I've collected throughout my time with Emacs.
 If you are having trouble understanding why your ~use-package~ declaration isn't working, try placing your cursor after the declaration and doing ~M-x pp-macroexpand-last-sexp~. This command prints out the actual code that ~use-package~ generates.
 
 * To Dos
+** TODO Learn more about Emacs window management
+- https://karthinks.com/software/emacs-window-management-almanac/
+- https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+- https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-buffer-alist/
 ** TODO update awesome emacs to include
 fido-mode
 tempo (snippet)

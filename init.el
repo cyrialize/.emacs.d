@@ -230,6 +230,13 @@
 (use-package format-all
   :ensure t
   :commands format-all-mode
+  :config
+  ;; Prevents the errors buffer from popping up
+  (add-to-list 'display-buffer-alist
+	       '("*format-all-errors*"
+		 (display-buffer-no-window)
+		 (allow-no-window . t)))
+
   :hook (prog-mode . format-all-mode))
 
 (eval-after-load 'format-all
@@ -249,6 +256,9 @@
 				"no"
 				"-q"
 				)))))))
+
+
+
 
 ;; https://github.com/minad/jinx
 (use-package jinx
@@ -382,9 +392,10 @@
     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
   :config
   (progn
-    (treemacs-follow-mode t)
+    (treemacs-follow-mode -1)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode 'always)
+
     (when treemacs-python-executable
       (treemacs-git-commit-diff-mode t))
 
@@ -726,6 +737,7 @@
   :mode
   (("\\.phtml\\'" . web-mode)
    ("\\.html\\'" . web-mode)
+   ("\\.css\\'" . web-mode)
    ("\\.php\\'" . web-mode)
    ("\\.tpl\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
