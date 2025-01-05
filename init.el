@@ -133,9 +133,12 @@
 (defun cyr-load-whitespace-style ()
   "Set whitespace style locally before calling whitespace mode."
   (progn
-    (if (eq major-mode 'org-mode)
-	(setq-local whitespace-style '(face empty tabs trailing))
-      (setq-local whitespace-style '(face empty tabs lines-tail trailing)))
+    (cond
+     ((eq major-mode 'org-mode)
+      (setq-local whitespace-style '(face empty tabs trailing)))
+     ((eq major-mode 'markdown-mode)
+      (setq-local whitespace-style '(face empty tabs trailing)))
+     (t (setq-local whitespace-style '(face empty tabs lines-tail trailing))))
     (whitespace-mode)))
 
 (add-hook 'find-file-hook 'cyr-load-whitespace-style)
@@ -239,6 +242,13 @@
 
   :hook (prog-mode . format-all-mode))
 
+;; Prior to using, be sure to update your local version of tidy
+;; See: https://www.html-tidy.org/
+;;
+;; I use prettier on a case by case basis via .dir-locals.el.
+;; Ex: ((nil . ((format-all-formatters . (("HTML" (prettier)))))))
+;;
+;; It's best to use prettier if you have HTML with a templating language.
 (eval-after-load 'format-all
   '(add-hook 'web-mode-hook
              (lambda ()
@@ -256,9 +266,6 @@
 				"no"
 				"-q"
 				)))))))
-
-
-
 
 ;; https://github.com/minad/jinx
 (use-package jinx
