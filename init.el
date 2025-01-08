@@ -78,6 +78,7 @@
 	zenburn-theme
 	ef-themes
 	markdown-mode
+	lua-mode
 
 	;; Required for magit
 	dash
@@ -755,6 +756,10 @@
 
 ;; https://github.com/jrblevin/markdown-mode
 (use-package markdown-mode
+  :ensure t)
+
+;; https://github.com/immerrr/lua-mode
+(use-package lua-mode
   :ensure t)
 
 (provide 'init)
