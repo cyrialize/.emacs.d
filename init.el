@@ -158,7 +158,7 @@
 					     whitespace-cleanup
 					     highlight-phrase)))))
 
-(global-set-key (kbd "C-i") 'cyr-favorite-commands)
+(global-set-key (kbd "C-x c") 'cyr-favorite-commands)
 
 ;;; Built-In Packages
 
@@ -251,6 +251,10 @@
 	 ;; Turn off god-mode locally with the i key (like Vim/Evil)
 	 :map god-local-mode-map
 	 ("i" . god-local-mode)))
+
+;; https://github.com/abo-abo/hydra
+(use-package hydra
+  :ensure t)
 
 ;; https://github.com/emacsorphanage/pkg-info/tree/master
 (use-package pkg-info
