@@ -222,6 +222,36 @@
 
 ;;; Installed Packages
 
+;; https://github.com/emacsorphanage/god-mode
+(use-package god-mode
+  :ensure t
+
+  :custom
+  ;; Ensure that no buffer is skipped, so god-mode is set everywhere
+  (god-exempt-major-modes nil)
+  (god-exempt-predicates nil)
+
+
+  :config
+  ;; Change the visual of the cursor when god-mode is on/off
+  ;; When god-mode is off, sets it to a bar
+  ;; When god mode is on, sets it to a box
+  (defun my-god-mode-update-cursor-type ()
+    (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar)))
+  :hook ((post-command . my-god-mode-update-cursor-type)
+	 (after-init . god-mode))
+
+  ;; Toggle god-mode using the escape key
+  :bind (("<escape>" . god-local-mode)
+	 ("<escape>" . god-mode-all)
+	 ("C-x C-1" . delete-other-windows)
+	 ("C-x C-2" . split-window-below)
+	 ("C-x C-3" . split-window-right)
+	 ("C-x C-0" . delete-window)
+	 ;; Turn off god-mode locally with the i key (like Vim/Evil)
+	 :map god-local-mode-map
+	 ("i" . god-local-mode)))
+
 ;; https://github.com/emacsorphanage/pkg-info/tree/master
 (use-package pkg-info
   :ensure t)
@@ -360,36 +390,6 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook))
-
-;; https://github.com/emacsorphanage/god-mode
-(use-package god-mode
-  :ensure t
-
-  :custom
-  ;; Ensure that no buffer is skipped, so god-mode is set everywhere
-  (god-exempt-major-modes nil)
-  (god-exempt-predicates nil)
-
-
-  :config
-  ;; Change the visual of the cursor when god-mode is on/off
-  ;; When god-mode is off, sets it to a bar
-  ;; When god mode is on, sets it to a box
-  (defun my-god-mode-update-cursor-type ()
-    (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar)))
-  :hook ((post-command . my-god-mode-update-cursor-type)
-	 (after-init . god-mode))
-
-  ;; Toggle god-mode using the escape key
-  :bind (("<escape>" . god-local-mode)
-	 ("<escape>" . god-mode-all)
-	 ("C-x C-1" . delete-other-windows)
-	 ("C-x C-2" . split-window-below)
-	 ("C-x C-3" . split-window-right)
-	 ("C-x C-0" . delete-window)
-	 ;; Turn off god-mode locally with the i key (like Vim/Evil)
-	 :map god-local-mode-map
-	 ("i" . god-local-mode)))
 
 ;; https://github.com/Alexander-Miller/treemacs
 (use-package treemacs
