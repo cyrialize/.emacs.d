@@ -158,7 +158,7 @@
 					     whitespace-cleanup
 					     highlight-phrase)))))
 
-(global-set-key (kbd "C-x c") 'cyr-favorite-commands)
+(global-set-key (kbd "C-x c f") 'cyr-favorite-commands)
 
 ;;; Built-In Packages
 
@@ -220,6 +220,10 @@
   :hook
   (after-init . delete-selection-mode))
 
+(use-package desktop
+  :custom
+  (desktop-path '("~/.emacs.d/.cache/")))
+
 ;;; Installed Packages
 
 ;; https://github.com/emacsorphanage/god-mode
@@ -230,7 +234,6 @@
   ;; Ensure that no buffer is skipped, so god-mode is set everywhere
   (god-exempt-major-modes nil)
   (god-exempt-predicates nil)
-
 
   :config
   ;; Change the visual of the cursor when god-mode is on/off
@@ -255,6 +258,53 @@
 ;; https://github.com/abo-abo/hydra
 (use-package hydra
   :ensure t)
+
+(defun cyr-org-tasks ()
+  "Load tasks desktop file and call hydra-org."
+  (interactive)
+  (if (file-exists-p (expand-file-name
+		      (format "%s/.emacs.desktop" private-tasks-desktop-path)))
+      (progn
+	(delete-other-windows)
+	(desktop-change-dir (expand-file-name private-tasks-desktop-path))
+	(desktop-read)
+	(hydra-org/body))
+    (message "Desktop file in %s does not exist!" private-tasks-desktop-path)))
+
+(defun hydra-org-insert-task ()
+  "Interactive function to prompt and insert task, used for hydra-org."
+  (interactive)
+  (let ((new-task (read-string "Enter new task: ")))
+    (end-of-line)
+    (newline)
+    (insert (format "* TODO %s" (string-trim new-task)))
+    (org-indent-line)))
+
+(defhydra hydra-org (:pre (setq which-key-inhibit t)
+                     :post (setq which-key-inhibit nil))
+  "
+  Movement:            Org:
+  _n_ next-line        _i_ hydra-org-insert-task
+  _p_ previous-line    _r_ org-refile
+  _k_ kill-whole-line  _t_ org-todo
+  _o_ other-window     _s_ org-save-all-org-buffers
+  _u_ undo
+  "
+
+  ("n" next-line)
+  ("p" previous-line)
+  ("k" kill-whole-line)
+  ("o" other-window)
+  ("u" undo)
+
+  ("i" hydra-org-insert-task)
+  ("r" org-refile)
+  ("t" org-todo)
+  ("s" org-save-all-org-buffers)
+
+  ("q" nil "quit"))
+
+(global-set-key (kbd "C-x c o") 'hydra-org/body)
 
 ;; https://github.com/emacsorphanage/pkg-info/tree/master
 (use-package pkg-info
