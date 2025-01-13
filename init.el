@@ -280,15 +280,16 @@
     (insert (format "* TODO %s" (string-trim new-task)))
     (org-indent-line)))
 
-(defhydra hydra-org (:pre (setq which-key-inhibit t)
+(defhydra hydra-org (:hint nil
+		     :pre (setq which-key-inhibit t)
                      :post (setq which-key-inhibit nil))
   "
-  Movement:            Org:
-  _n_ next-line        _i_ hydra-org-insert-task
-  _p_ previous-line    _r_ org-refile
-  _k_ kill-whole-line  _t_ org-todo
-  _o_ other-window     _s_ org-save-all-org-buffers
-  _u_ undo
+  Movement:             Org:
+  _n_: next-line        _i_: hydra-org-insert-task
+  _p_: previous-line    _r_: org-refile
+  _k_: kill-whole-line  _t_: org-todo
+  _o_: other-window     _s_: org-save-all-org-buffers
+  _u_: undo
   "
 
   ("n" next-line)
