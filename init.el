@@ -273,7 +273,7 @@
     (message "Desktop file in %s does not exist!" private-tasks-desktop-path)))
 
 (defun hydra-org-insert-task ()
-  "Interactive function to prompt and insert task, used for hydra-org."
+  "Prompt and insert task, used for hydra-org."
   (interactive)
   (let ((new-task (read-string "Enter new task: ")))
     (end-of-line)
@@ -281,16 +281,23 @@
     (insert (format "* TODO %s" (string-trim new-task)))
     (org-indent-line)))
 
+(defun hydra-org-sort ()
+  "Select entire buffer and call org-sort, used for hydra-org."
+  (interactive)
+  (progn
+    (mark-whole-buffer)
+    (org-sort)))
+
 (defhydra hydra-org (:hint nil
 		     :pre (setq which-key-inhibit t)
                      :post (setq which-key-inhibit nil))
   "
   Movement:             Org:
-  _n_: next-line        _i_: hydra-org-insert-task
+  _n_: next-line        _i_: hydra-org-insert-task    _a_: hydra-org-sort
   _p_: previous-line    _r_: org-refile
   _k_: kill-whole-line  _t_: org-todo
   _o_: other-window     _s_: org-save-all-org-buffers
-  _u_: undo
+  _u_: undo             _t_: org-priority
   "
 
   ("n" next-line)
@@ -303,6 +310,8 @@
   ("r" org-refile)
   ("t" org-todo)
   ("s" org-save-all-org-buffers)
+  ("t" org-priority)
+  ("a" hydra-org-sort)
 
   ("q" nil "quit"))
 
