@@ -16,6 +16,11 @@
 ;; (setq private-tasks-desktop-path
 ;;       "path to tasks desktop")
 
+;; Referenced for org-agenda-files
+;; (defvar private-org-agenda-files)
+;; (setq private-org-agenda-files
+;;      '("path to file"))
+
 
 (provide 'private)
 ;;; private.el ends here

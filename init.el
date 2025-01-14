@@ -202,13 +202,14 @@
 
 (use-package org-mode
   :custom
-  ((org-startup-folded t)
-   (org-startup-truncated nil)
-   (org-refile-use-outline-path 'file)
-   (org-refile-targets '((private-org-refile-targets :maxlevel . 1))))
+  (org-startup-folded t)
+  (org-startup-truncated nil)
+  (org-refile-use-outline-path 'file)
+  (org-refile-targets '((private-org-refile-targets :maxlevel . 1)))
+  (org-agenda-files private-org-agenda-files)
 
   :hook
-  (org-mode . flyspell-mode))
+  (org-mode . jinx-mode))
 
 (use-package whitespace)
 
@@ -381,7 +382,9 @@
 
 ;; https://github.com/snosov1/toc-org
 (use-package toc-org
-  :ensure t)
+  :ensure t
+  :init
+  (cyr-load-private))
 
 ;; https://elpa.gnu.org/packages/eldoc.html
 (use-package eldoc
