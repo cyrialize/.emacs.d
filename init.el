@@ -160,6 +160,31 @@
 
 (global-set-key (kbd "C-x c f") 'cyr-favorite-commands)
 
+(defun cyr-org-new-log-heading ()
+  "Insert a new heading for my preferred log formatting.
+
+For example:
+* 2025
+** January
+*** Monday 01/01/25
+
+This should be called on the current heading type you want, because we're using
+`org-insert-heading-after-current. For example, if I want to insert 2026, I'd
+call this function on '* 2025'"
+  (interactive)
+  (org-insert-heading-after-current)
+  (progn
+    (let ((heading (completing-read "Choose heading type: "
+				    '("day" "month" "year")
+				    nil
+				    t)))
+      (cond
+       ((string= "day" heading) (insert (format "%s %s"
+					   (format-time-string "%A")
+					   (format-time-string "%m/%d/%y"))))
+       ((string= "month" heading) (insert (format-time-string "%B")))
+       ((string= "year" heading) (insert (format-time-string "%Y")))))))
+
 ;;; Built-In Packages
 
 (use-package emacs
@@ -207,6 +232,12 @@
   (org-refile-use-outline-path 'file)
   (org-refile-targets '((private-org-refile-targets :maxlevel . 1)))
   (org-agenda-files private-org-agenda-files)
+
+  ;; By default this is "B", which can make org-sort confusing as explicitly
+  ;; marked tasks with [#B] will not be moved. [#A] is 65, and the default
+  ;; lowest, [#C], is 67. Making the default 68 means that tasks without
+  ;; explicit priority will always be below those that have explicit priority.
+  (org-priority-default 68)
 
   :hook
   (org-mode . jinx-mode))
@@ -316,6 +347,61 @@
   ("q" nil "quit"))
 
 (global-set-key (kbd "C-x c o") 'hydra-org/body)
+
+(defhydra hydra-org-log (:hint nil
+			 :pre (setq which-key-inhibit t)
+			 :post (setq which-key-inhibit nil))
+  "
+  _n_: org-next-visible-heading
+  _p_: org-previous-visible-heading
+  _e_: end-of-buffer
+  _b_: beginning-of-buffer
+  _l_: cyr-org-new-log-heading
+  "
+
+  ("n" org-next-visible-heading)
+  ("p" org-previous-visible-heading)
+  ("e" end-of-buffer)
+  ("b" beginning-of-buffer)
+  ("l" cyr-org-new-log-heading)
+
+  ("q" nil "quit"))
+
+(global-set-key (kbd "C-x c l") 'hydra-org-log/body)
+
+(defhydra hydra-spelling (:hint nil
+			  :pre (setq which-key-inhibit t)
+			  :post (setq which-key-inhibit nil))
+  "
+  _n_: jinx-next
+  _p_: jinx-previous
+  _c_: jinx-correct
+  "
+
+  ("n" jinx-next)
+  ("p" jinx-previous)
+  ("c" jinx-correct)
+
+  ("q" nil "quit"))
+
+(global-set-key (kbd "C-x c s") 'hydra-spelling/body)
+
+(defhydra hydra-errors (:hint nil
+		        :pre (setq which-key-inhibit t)
+			:post (setq which-key-inhibit nil))
+
+  "
+  _c_: consult-flymake
+  _n_: flymake-goto-next-error
+  _p_: flymake-goto-prev-error
+  "
+  ("c" consult-flymake)
+  ("n" flymake-goto-next-error)
+  ("p" flymake-goto-prev-error)
+
+  ("q" nil "quit"))
+
+(global-set-key (kbd "C-x c e") 'hydra-errors/body)
 
 ;; https://github.com/emacsorphanage/pkg-info/tree/master
 (use-package pkg-info
