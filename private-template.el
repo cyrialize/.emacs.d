@@ -21,6 +21,9 @@
 ;; (setq private-org-agenda-files
 ;;      '("path to file"))
 
+;; Referenced for cyr-new-ticket
+;; (defvar private-cyr-new-ticket-dir)
+;; (setq private-cyr-new-ticket-var "path to dir")
 
 (provide 'private)
 ;;; private.el ends here

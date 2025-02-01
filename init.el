@@ -179,11 +179,69 @@ call this function on '* 2025'"
 				    nil
 				    t)))
       (cond
-       ((string= "day" heading) (insert (format "%s %s"
-					   (format-time-string "%A")
-					   (format-time-string "%m/%d/%y"))))
+       ((string= "day" heading) (cyr-org-log-day-text))
        ((string= "month" heading) (insert (format-time-string "%B")))
        ((string= "year" heading) (insert (format-time-string "%Y")))))))
+
+(defun cyr-org-log-day-text ()
+  "Insert text that follows my preferred day format."
+  (interactive)
+  (insert (format "%s %s"
+		  (format-time-string "%A")
+		  (format-time-string "%m/%d/%y"))))
+
+(defun cyr-ticket-file-name-from-string (ticket-title)
+  "Remove invalid characters and correct spacing for TICKET-TITLE."
+  (let ((valid-char-only-title (replace-regexp-in-string
+				"[^a-zA-Z0-9 \\-]"
+				""
+				ticket-title)))
+    (let ((space-correct-title (replace-regexp-in-string
+				"\s+"
+				"-"
+				(string-trim valid-char-only-title))))
+      space-correct-title)))
+
+(defun cyr-new-ticket ()
+  "Create a new org file for a ticket."
+  (interactive)
+  (if (and private-cyr-new-ticket-dir
+           (file-exists-p (expand-file-name private-cyr-new-ticket-dir)))
+      (progn
+        (let ((ticket-title (read-string "Enter ticket name: ")))
+          (let ((ticket-file-name
+                 (cyr-ticket-file-name-from-string ticket-title)))
+            (with-temp-buffer
+              (insert ticket-file-name)
+	      (insert "\n\n* ")
+	      (cyr-org-log-day-text)
+              (write-region
+               (point-min)
+               (point-max)
+               (concat
+                (expand-file-name private-cyr-new-ticket-dir)
+		ticket-file-name
+                ".org"))))))
+    (message "Ticket dir not defined or found!")))
+
+(defun cyr-copy-insert-log ()
+  "Use the contents of a `copy.org` for `completing-read`."
+  (interactive)
+  (let ((source (cyr-list-from-file "~/Documents/org/self/copy.org")))
+    (when source
+	(let ((log (completing-read "Choose one: " source nil t)))
+	  (insert log)))))
+
+(defun cyr-list-from-file (file)
+  "Given a FILE return a list of the contents."
+  (if (file-exists-p (expand-file-name file))
+      (progn
+	(with-temp-buffer
+	  (insert-file-contents file)
+	  (split-string (buffer-string) "\n" t)))
+    (progn
+      (message (format "File %s does not exist!" file))
+      nil)))
 
 ;;; Built-In Packages
 
