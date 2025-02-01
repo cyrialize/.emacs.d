@@ -224,13 +224,25 @@ call this function on '* 2025'"
                 ".org"))))))
     (message "Ticket dir not defined or found!")))
 
-(defun cyr-copy-insert-log ()
-  "Use the contents of a `copy.org` for `completing-read`."
+(defun cyr-log-inserts ()
+  "Select a file for a `completing-read` menu of contents."
   (interactive)
-  (let ((source (cyr-list-from-file "~/Documents/org/self/copy.org")))
-    (when source
-	(let ((log (completing-read "Choose one: " source nil t)))
-	  (insert log)))))
+  (let ((chosen-file (completing-read
+		      "Choose one: "
+		      (directory-files
+		       (expand-file-name "~/.emacs.d/logs/")
+		       nil
+		       "\\`[^.]")
+		      nil
+		      t)))
+    (progn
+      (let ((log (completing-read
+		  "Choose one: "
+		  (cyr-list-from-file
+		   (expand-file-name chosen-file "~/.emacs.d/logs/"))
+		  nil
+		  t)))
+	(insert log)))))
 
 (defun cyr-list-from-file (file)
   "Given a FILE return a list of the contents."
