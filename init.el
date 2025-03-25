@@ -79,6 +79,7 @@
 	ef-themes
 	markdown-mode
 	lua-mode
+	tempel
 
 	;; Required for magit
 	dash
@@ -356,6 +357,23 @@ call this function on '* 2025'"
 	 ;; Turn off god-mode locally with the i key (like Vim/Evil)
 	 :map god-local-mode-map
 	 ("i" . god-local-mode)))
+
+;; https://github.com/minad/tempel
+(use-package tempel
+  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+         ("M-*" . tempel-insert))
+
+  :init
+  (defun tempel-setup-capf ()
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+
+  :hook
+  (conf-mode . tempel-setup-capf)
+  (prog-mode . tempel-setup-capf)
+  (text-mode . tempel-setup-capf)
+  (after-init . global-tempel-abbrev-mode))
 
 ;; https://github.com/abo-abo/hydra
 (use-package hydra

@@ -1,0 +1,23 @@
+org-mode
+
+(td (cyr-org-log-day-text))
+(mn (insert (format-time-string "%B")))
+(yr (insert (format-time-string "%Y")))
+
+emacs-lisp-mode
+
+(todo (insert ";; TODO: "))
+(var "(defvar " p "\n  \"" p "\")")
+
+ruby-mode
+ruby-ts-mode
+
+(def "def " p n> p n "  end")
+(defp "def " p "(" p ")" n> p n "  end")
+(cls "class " p n "end")
+(atr "attr_reader " p)
+(atw "attr_writer " p)
+(ata "attr_accessor "p)
+
+(ewo "each_with_object("p") do |"p","p"|" n> "end")
+(e "each do |"p"|" n> "end")
