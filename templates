@@ -4,6 +4,8 @@ org-mode
 (mn (insert (format-time-string "%B")))
 (yr (insert (format-time-string "%Y")))
 
+(src "#+BEGIN_SRC " p n> "#+END_SRC")
+
 emacs-lisp-mode
 
 (todo (insert ";; TODO: "))
