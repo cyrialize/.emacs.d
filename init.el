@@ -261,7 +261,13 @@ call this function on '* 2025'"
 (use-package emacs
   :custom
   (scroll-bar-mode nil)
-  (tool-bar-mode nil)
+  ;; tool-bar-mode used to be nil here, instead we turn it on so that Emacs
+  ;; could correctly be recognized by Yabai. We turn it off after startup -
+  ;; see :hook below.
+  ;;
+  ;; Idea for this setup from:
+  ;; https://github.com/koekeishiya/yabai/issues/86
+  (tool-bar-mode t)
 
   (mode-require-final-newline 'visit-save)
   (require-final-newline 'visit-save)
@@ -285,6 +291,9 @@ call this function on '* 2025'"
   ((emacs-startup . (lambda () (cyr-load-custom "~/.emacs.d/custom.el")))
    (emacs-startup . cyr-load-private)
    (emacs-startup . cyr-exec-path-from-shell)
+   ;; Turn the tool bar off. Yabai continues to recognize Emacs after, it is
+   ;; only needed at startup.
+   (emacs-startup . (lambda () (tool-bar-mode -1)))
    (after-init . tab-bar-mode)
    (after-init . global-hl-line-mode)
    (after-init . nerd-icons-completion-mode)
