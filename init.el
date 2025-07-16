@@ -293,7 +293,7 @@ call this function on '* 2025'"
    (emacs-startup . cyr-exec-path-from-shell)
    ;; Turn the tool bar off. Yabai continues to recognize Emacs after, it is
    ;; only needed at startup.
-   (emacs-startup . (lambda () (tool-bar-mode -1)))
+   (emacs-startup . (lambda () (sleep-for 0.5) (tool-bar-mode -1)))
    (after-init . tab-bar-mode)
    (after-init . global-hl-line-mode)
    (after-init . nerd-icons-completion-mode)
