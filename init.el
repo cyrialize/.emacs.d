@@ -510,9 +510,7 @@ call this function on '* 2025'"
   (add-to-list 'display-buffer-alist
 	       '("*format-all-errors*"
 		 (display-buffer-no-window)
-		 (allow-no-window . t)))
-
-  :hook (prog-mode . format-all-mode))
+		 (allow-no-window . t))))
 
 ;; Prior to using, be sure to update your local version of tidy
 ;; See: https://www.html-tidy.org/
@@ -532,8 +530,14 @@ call this function on '* 2025'"
 				"yes"
 				"--indent-spaces"
 				"2"
+				"--indent-attributes"
+				"yes"
 				"--wrap"
 				"80"
+				"--vertical-space"
+				"yes"
+				"--break-before-br"
+				"yes"
 				"--tidy-mark"
 				"no"
 				"-q"
