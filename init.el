@@ -940,12 +940,12 @@ call this function on '* 2025'"
 (use-package ruby-mode
   :mode "\\.rb\\'"
   :interpreter "ruby"
-  :hook (chruby-use-corresponding))
+  :hook (ruby-mode . chruby-use-corresponding))
 
 (use-package ruby-ts-mode
   :mode "\\.rb\\'"
   :interpreter "ruby"
-  :hook (chruby-use-corresponding))
+  :hook (ruby-ts-mode . chruby-use-corresponding))
 
 ;; https://github.com/rainstormstudio/nerd-icons.el
 (use-package nerd-icons
