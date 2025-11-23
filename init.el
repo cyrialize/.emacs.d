@@ -81,6 +81,7 @@
 	lua-mode
 	tempel
 	ws-butler
+	rust-mode
 
 	;; Required for magit
 	dash
@@ -578,6 +579,10 @@ call this function on '* 2025'"
 ;; https://elpa.gnu.org/packages/eldoc.html
 (use-package eldoc
   :ensure t
+
+  :custom
+  (eldoc-idle-delay 2)
+
   :hook
   (after-init . global-eldoc-mode))
 
@@ -1007,6 +1012,10 @@ call this function on '* 2025'"
 
 ;; https://github.com/immerrr/lua-mode
 (use-package lua-mode
+  :ensure t)
+
+;; https://github.com/rust-lang/rust-mode
+(use-package rust-mode
   :ensure t)
 
 (provide 'init)

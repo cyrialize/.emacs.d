@@ -5,7 +5,7 @@ https://github.com/d12frosted/homebrew-emacs-plus
 Here are the commands I've used:
 #+BEGIN_SRC sh
 brew tap d12frosted/emacs-plus
-brew install emacs-plus —-with-ctags —-with-dbus —-with-debug —-with-no-frame-refocus --with-native-comp --with-modern-black-variant-icon
+brew install emacs-plus@30 --with-ctags --with-dbus --with-debug
 #+END_SRC
 
 ** Tree Sitter
@@ -120,9 +120,6 @@ part of ~package-selected-packages~.
 ** TODO Read consult manual
 ** TODO Read marginalia manual
 ** TODO Read orderless manual
-** TODO Jump to Emacs 30
-I may switch from ~straight~ to just using ~use-package~ with ~:vc~
-
 ** TODO Look into the package ~citre~
 
 This was previously used when setting up ~ctags~ with the project.
