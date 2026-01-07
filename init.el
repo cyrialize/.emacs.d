@@ -31,6 +31,8 @@
       '(
 	use-package
 	org-mode
+	org-ql
+	org-super-agenda
 	toc-org
 	pkg-info
 	exec-path-from-shell
@@ -292,6 +294,7 @@ call this function on '* 2025'"
    (after-init . nerd-icons-completion-mode)
    (after-init . column-number-mode)
    (after-init . ws-butler-global-mode)
+   (after-init . org-super-agenda-mode)
    (prog-mode . display-line-numbers-mode)
    (prog-mode . display-fill-column-indicator-mode)))
 
@@ -306,6 +309,7 @@ call this function on '* 2025'"
   (org-refile-use-outline-path 'file)
   (org-refile-targets '((private-org-refile-targets :maxlevel . 1)))
   (org-agenda-files private-org-agenda-files)
+  (org-log-done 'time)
 
   ;; By default this is "B", which can make org-sort confusing as explicitly
   ;; marked tasks with [#B] will not be moved. [#A] is 65, and the default
@@ -331,6 +335,31 @@ call this function on '* 2025'"
   (desktop-path '("~/.emacs.d/.cache/")))
 
 ;;; Installed Packages
+
+;; https://github.com/alphapapa/org-ql
+(use-package org-ql
+  :ensure t
+  ;; Agenda files are loaded from a variable in private
+  :after private
+
+  :init
+  (defun cyr-org-ql-due-and-overdue ()
+    "Show TODO entries scheduled for today or earlier, grouped by tags."
+    (interactive)
+    (org-ql-search
+      (org-agenda-files)
+      '(and (todo)
+            (scheduled :to today))
+      :title "Due & overdue TODOs"
+      :sort '(scheduled)
+      :group '(tags))))
+
+;; https://github.com/alphapapa/org-super-agenda
+(use-package org-super-agenda
+  ;; Agenda files are loaded from a variable in private
+  :after private
+  :custom
+  (org-super-agenda-groups '((:auto-category t))))
 
 ;; https://github.com/emacsorphanage/god-mode
 (use-package god-mode
