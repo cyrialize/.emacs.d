@@ -295,6 +295,7 @@ call this function on '* 2025'"
    (after-init . column-number-mode)
    (after-init . ws-butler-global-mode)
    (after-init . org-super-agenda-mode)
+   (after-init . minions-mode)
    (prog-mode . display-line-numbers-mode)
    (prog-mode . display-fill-column-indicator-mode)))
 
@@ -648,9 +649,7 @@ call this function on '* 2025'"
 
 ;; https://github.com/tarsius/minions
 (use-package minions
-  :ensure t
-
-  :hook (after-init))
+  :ensure t)
 
 ;; https://github.com/purcell/whitespace-cleanup-mode
 (use-package whitespace-cleanup-mode
