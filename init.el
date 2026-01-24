@@ -123,6 +123,7 @@
 
 (defun cyr-load-private ()
   "Load the private.el file if it exists."
+  (interactive)
   (let ((private "~/.emacs.d/private.el"))
     (if (file-exists-p private)
 	(load private)
@@ -130,6 +131,7 @@
 
 (defun cyr-load-custom (custom)
   "Set the CUSTOM variable and load the custom file."
+  (interactive)
   (if (file-exists-p custom)
       (progn
 	(setq custom-file custom)
