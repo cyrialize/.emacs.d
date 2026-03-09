@@ -322,6 +322,9 @@ call this function on '* 2025'"
   (org-priority-default 68)
 
   :hook
+  ;; I modify org files on my phone - I want those changes to automatically show
+  ;; up on my machine to avoid conflicts
+  (org-mode . auto-revert-mode)
   (org-mode . jinx-mode))
 
 (use-package whitespace)
