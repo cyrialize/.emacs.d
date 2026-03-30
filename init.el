@@ -84,6 +84,7 @@
 	tempel
 	ws-butler
 	rust-mode
+	request
 
 	;; Required for magit
 	dash
@@ -312,8 +313,17 @@ call this function on '* 2025'"
   (org-refile-use-outline-path 'file)
   (org-refile-targets '((private-org-refile-targets :maxlevel . 1)))
   (org-agenda-files private-org-agenda-files)
+
+  ;; These settings make it so that on state change, things are logged into a
+  ;; logbook drawer, I use this to keep track of when things have been done as
+  ;; a running log.
   (org-log-done 'time)
   (org-log-into-drawer t)
+  (org-treat-insert-todo-heading-as-state-change t)
+  (org-todo-keywords
+   ;; The exclamation point in DONE makes it so that the timestamp is just
+   ;; logged going from TODO -> DONE
+   '((sequence "TODO(t)" "|" "DONE(d!)")))
 
   ;; By default this is "B", which can make org-sort confusing as explicitly
   ;; marked tasks with [#B] will not be moved. [#A] is 65, and the default
@@ -1050,6 +1060,10 @@ call this function on '* 2025'"
 
 ;; https://github.com/rust-lang/rust-mode
 (use-package rust-mode
+  :ensure t)
+
+;; https://github.com/tkf/emacs-request
+(use-package request
   :ensure t)
 
 (provide 'init)
