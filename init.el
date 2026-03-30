@@ -323,7 +323,7 @@ call this function on '* 2025'"
   (org-todo-keywords
    ;; The exclamation point in DONE makes it so that the timestamp is just
    ;; logged going from TODO -> DONE
-   '((sequence "TODO(t)" "|" "DONE(d!)")))
+   '((sequence "TODO" "|" "DONE(!)")))
 
   ;; By default this is "B", which can make org-sort confusing as explicitly
   ;; marked tasks with [#B] will not be moved. [#A] is 65, and the default
