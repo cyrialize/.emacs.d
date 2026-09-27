@@ -317,9 +317,10 @@ call this function on '* 2025'"
   ;; These settings make it so that on state change, things are logged into a
   ;; logbook drawer, I use this to keep track of when things have been done as
   ;; a running log.
-  (org-log-done 'time)
-  (org-log-into-drawer t)
-  (org-treat-insert-todo-heading-as-state-change t)
+  ;;
+  ;; (org-log-done 'time)
+  ;; (org-log-into-drawer t)
+  ;; (org-treat-insert-todo-heading-as-state-change t)
   (org-todo-keywords
    ;; The exclamation point in DONE makes it so that the timestamp is just
    ;; logged going from TODO -> DONE
