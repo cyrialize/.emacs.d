@@ -314,18 +314,6 @@ call this function on '* 2025'"
   (org-refile-targets '((private-org-refile-targets :maxlevel . 1)))
   (org-agenda-files private-org-agenda-files)
 
-  ;; These settings make it so that on state change, things are logged into a
-  ;; logbook drawer, I use this to keep track of when things have been done as
-  ;; a running log.
-  ;;
-  ;; (org-log-done 'time)
-  ;; (org-log-into-drawer t)
-  ;; (org-treat-insert-todo-heading-as-state-change t)
-  (org-todo-keywords
-   ;; The exclamation point in DONE makes it so that the timestamp is just
-   ;; logged going from TODO -> DONE
-   '((sequence "TODO" "|" "DONE(!)")))
-
   ;; By default this is "B", which can make org-sort confusing as explicitly
   ;; marked tasks with [#B] will not be moved. [#A] is 65, and the default
   ;; lowest, [#C], is 67. Making the default 68 means that tasks without
