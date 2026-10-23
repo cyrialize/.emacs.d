@@ -299,6 +299,7 @@ call this function on '* 2025'"
    (after-init . ws-butler-global-mode)
    (after-init . org-super-agenda-mode)
    (after-init . minions-mode)
+   (after-init . global-auto-revert-mode)
    (prog-mode . display-line-numbers-mode)
    (prog-mode . display-fill-column-indicator-mode)))
 
