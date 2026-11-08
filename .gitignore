@@ -13,6 +13,9 @@ transient
 tutorial
 recentf
 tree-sitter
+.cache*
+ielm-history.eld
+request*
 
 # Private files
 private.el
