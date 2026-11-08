@@ -85,6 +85,7 @@
 	ws-butler
 	rust-mode
 	request
+	ghostel
 
 	;; Required for magit
 	dash
@@ -342,6 +343,10 @@ call this function on '* 2025'"
   (desktop-path '("~/.emacs.d/.cache/")))
 
 ;;; Installed Packages
+
+;; https://github.com/dakra/ghostel
+(use-package ghostel
+  :ensure t)
 
 ;; https://github.com/alphapapa/org-ql
 (use-package org-ql
@@ -808,15 +813,6 @@ call this function on '* 2025'"
 		       embark-isearch-highlight-indicator))
 
   :config
-  ;; Custom embark keymaps
-  (defvar-keymap cyr-embark-code-map
-    :doc "Commands always used while programming"
-    "c" #'comment-or-uncomment-region
-    "w" #'whitespace-cleanup-region
-    "d" #'delete-region
-    "j" #'json-pretty-print
-    "e" #'elisp-eval-region-or-buffer)
-
   (add-to-list 'embark-keymap-alist '(region . cyr-embark-code-map))
 
   ;; Hide the mode line of the Embark live/completions buffers
