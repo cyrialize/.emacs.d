@@ -84,7 +84,6 @@
 	embark-consult
 	exec-path-from-shell
 	format-all
-	ghostel
 	god-mode
 	helm
 	hl-todo
