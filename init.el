@@ -368,12 +368,6 @@ call this function on '* 2025'"
   (org-mode . auto-revert-mode)
   (org-mode . jinx-mode))
 
-(use-package whitespace)
-
-(use-package xref)
-
-(use-package eglot)
-
 (use-package delsel
   :hook
   (after-init . delete-selection-mode))
@@ -382,15 +376,16 @@ call this function on '* 2025'"
   :custom
   (desktop-path '("~/.emacs.d/.cache/")))
 
+(use-package eldoc
+  :custom
+  (eldoc-idle-delay 2)
+
+  :hook
+  (after-init . global-eldoc-mode))
+
 ;;; Installed Packages
 
-;; https://github.com/dakra/ghostel
-(use-package ghostel
-  :ensure t)
-
-;; https://github.com/alphapapa/org-ql
 (use-package org-ql
-  :ensure t
   ;; Agenda files are loaded from a variable in private
   :after private
 
@@ -406,17 +401,13 @@ call this function on '* 2025'"
       :sort '(scheduled)
       :group '(tags))))
 
-;; https://github.com/alphapapa/org-super-agenda
 (use-package org-super-agenda
   ;; Agenda files are loaded from a variable in private
   :after private
   :custom
   (org-super-agenda-groups '((:auto-category t))))
 
-;; https://github.com/emacsorphanage/god-mode
 (use-package god-mode
-  :ensure t
-
   :custom
   ;; Ensure that no buffer is skipped, so god-mode is set everywhere
   (god-exempt-major-modes nil)
@@ -442,7 +433,6 @@ call this function on '* 2025'"
 	 :map god-local-mode-map
 	 ("i" . god-local-mode)))
 
-;; https://github.com/minad/tempel
 (use-package tempel
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
          ("M-*" . tempel-insert))
@@ -459,9 +449,7 @@ call this function on '* 2025'"
   (text-mode . tempel-setup-capf)
   (after-init . global-tempel-abbrev-mode))
 
-;; https://github.com/abo-abo/hydra
-(use-package hydra
-  :ensure t)
+(use-package hydra)
 
 (defun cyr-org-tasks ()
   "Load tasks desktop file and call hydra-org."
@@ -575,17 +563,7 @@ call this function on '* 2025'"
 
 (global-set-key (kbd "C-x c e") 'hydra-errors/body)
 
-;; https://github.com/emacsorphanage/pkg-info/tree/master
-(use-package pkg-info
-  :ensure t)
-
-;; https://github.com/purcell/exec-path-from-shell
-(use-package exec-path-from-shell
-  :ensure t)
-
-;; https://github.com/lassik/emacs-format-all-the-code
 (use-package format-all
-  :ensure t
   :commands format-all-mode
   :config
   ;; Prevents the errors buffer from popping up
@@ -625,17 +603,13 @@ call this function on '* 2025'"
 				"-q"
 				)))))))
 
-;; https://github.com/minad/jinx
 (use-package jinx
-  :ensure t
   :hook (emacs-startup . global-jinx-mode)
   :bind (("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages)))
 
-;; https://github.com/emacs-helm/helm
 (use-package helm
   :disabled
-  :ensure t
 
   :custom
   ((helm-M-x-fuzzy-match t)
@@ -651,40 +625,18 @@ call this function on '* 2025'"
   :hook
   (after-init . helm-mode))
 
-;; https://github.com/snosov1/toc-org
 (use-package toc-org
-  :ensure t
   :init
   (cyr-load-private))
 
-;; https://elpa.gnu.org/packages/eldoc.html
-(use-package eldoc
-  :ensure t
-
-  :custom
-  (eldoc-idle-delay 2)
-
-  :hook
-  (after-init . global-eldoc-mode))
-
-;; https://github.com/casouri/eldoc-box
-(use-package eldoc-box
-  :ensure t)
-
-;; https://github.com/minad/corfu
 (use-package corfu
-  :ensure t
-
   :custom
   (corfu-auto t)
 
   :hook
   (after-init . global-corfu-mode))
 
-;; https://github.com/minad/cape
 (use-package cape
-  :ensure t
-
   :bind ("C-c p" . cape-prefix-map)
 
   :custom
@@ -698,33 +650,20 @@ call this function on '* 2025'"
 		     #'cape-elisp-symbol
 		     #'cape-dict))))
 
-;; https://github.com/tarsius/minions
-(use-package minions
-  :ensure t)
-
-;; https://github.com/purcell/whitespace-cleanup-mode
 (use-package whitespace-cleanup-mode
-  :ensure t
-
   :hook
   (after-init . global-whitespace-cleanup-mode))
 
-;; https://github.com/Malabarba/smart-mode-line
 (use-package smart-mode-line
-  :ensure t
   :init
   (setq sml/no-confirm-load-theme t)
   (sml/setup))
 
-;; https://github.com/emacs-dashboard/emacs-dashboard
 (use-package dashboard
-  :ensure t
   :config
   (dashboard-setup-startup-hook))
 
-;; https://github.com/Alexander-Miller/treemacs
 (use-package treemacs
-  :ensure t
   :defer t
   :init
   (with-eval-after-load 'winum
@@ -757,22 +696,16 @@ call this function on '* 2025'"
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-icons-dired
-  :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 (use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t)
+  :after (treemacs magit))
 
 (use-package treemacs-tab-bar
   :after (treemacs)
-  :ensure t
   :config (treemacs-set-scope-type 'Tabs))
 
-;; https://github.com/minad/vertico
 (use-package vertico
-  :ensure t
-
   :custom
   (vertico-scroll-margin 0)
   (vertico-count 20)
@@ -785,62 +718,41 @@ call this function on '* 2025'"
   :defines
   (vertico-cycle))
 
-;; https://github.com/oantolin/orderless
 (use-package orderless
-  :ensure t
   :init
   (setq completion-styles '(orderless)
         completion-category-defaults nil
         completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
-;; https://github.com/emacs-mirror/emacs/blob/master/lisp/savehist.el
 (use-package savehist
-  :ensure t
   :config
   (savehist-mode))
 
-;; https://gitlab.com/fommil/emacs-darcula-theme
 (use-package darcula-theme
-  :ensure t
   :disabled
 
   :init
   (load-theme 'darcula t))
 
-;; https://github.com/bbatsov/zenburn-emacs
 (use-package zenburn-theme
-  :ensure t
   :disabled
 
   :init
   (load-theme 'zenburn t))
 
-;; https://github.com/protesilaos/ef-themes
 (use-package ef-themes
-  :ensure t
-
   :init
   (load-theme 'ef-dream t))
 
-;; https://github.com/iqbalansari/restart-emacs
-(use-package restart-emacs
-  :ensure t)
-
-;; https://github.com/minad/marginalia
 (use-package marginalia
-  :ensure t
-
   :hook (after-init)
   ;; Either bind `marginalia-cycle` globally or only in the minibuffer
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
          ("M-A" . marginalia-cycle)))
 
-;; https://github.com/oantolin/embark
 (use-package embark
-  :ensure t
-
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("C-;" . embark-dwim)        ;; good alternative: M-.
@@ -853,17 +765,13 @@ call this function on '* 2025'"
 		       embark-isearch-highlight-indicator))
 
   :config
-  (add-to-list 'embark-keymap-alist '(region . cyr-embark-code-map))
-
   ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none)))))
 
-;; https://github.com/minad/consult
 (use-package consult
-  :ensure t
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
@@ -946,61 +854,27 @@ call this function on '* 2025'"
    consult--source-recent-file consult--source-project-recent-file
    :preview-key '(:debounce 0.4 any)))
 
-(use-package embark-consult
-  :ensure t)
-
 (use-package consult-dir
-  :ensure t
   :bind (("C-x C-d" . consult-dir)
          :map vertico-map
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
 
-;; https://github.com/justbur/emacs-which-key
 (use-package which-key
-  :ensure t
   :hook (after-init))
 
-(use-package dash
-  :ensure t)
-
-(use-package transient
-  :ensure t)
-
-(use-package with-editor
-  :ensure t)
-
-;; The above packages are required for magit
-;; https://magit.vc/
-(use-package magit
-  :ensure t)
-
-;; https://github.com/dajva/rg.el
 (use-package rg
-  :ensure t
   :config
   (rg-enable-default-bindings))
 
-;; https://github.com/renzmann/treesit-auto
 (use-package treesit-auto
-  :ensure t
   :custom
   (treesit-auto-install 'prompt)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
-;; https://github.com/plexus/chruby.el
-(use-package chruby
-  :ensure t)
-
-;; https://github.com/nonsequitur/inf-ruby
-(use-package inf-ruby
-  :ensure t)
-
-;; https://github.com/pd/yard-mode.el
 (use-package yard-mode
-  :ensure t
   :hook (ruby-mode ruby-ts-mode))
 
 (use-package ruby-mode
@@ -1013,39 +887,24 @@ call this function on '* 2025'"
   :interpreter "ruby"
   :hook (ruby-ts-mode . chruby-use-corresponding))
 
-;; https://github.com/rainstormstudio/nerd-icons.el
-(use-package nerd-icons
-  :ensure t)
-
-;; https://github.com/rainstormstudio/nerd-icons-completion
 (use-package nerd-icons-completion
-  :ensure t
   :after marginalia
   :hook
   (marginalia-mode-hook . nerd-icons-completion-marginalia-setup))
 
-;; https://github.com/LuigiPiucco/nerd-icons-corfu
 (use-package nerd-icons-corfu
-  :ensure t
   :after corfu
   :hook
   (corfu-margin-formatters . nerd-icons-corfu-formatter))
 
-;; https://github.com/rainstormstudio/nerd-icons-dired
 (use-package nerd-icons-dired
-  :ensure t
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
-;; https://github.com/tarsius/hl-todo
 (use-package hl-todo
-  :ensure t
   :hook (prog-mode))
 
-;; https://web-mode.org/
 (use-package web-mode
-  :ensure t
-
   :custom
   (web-mode-code-indent-offset 2)
   (web-mode-attr-indent-offset 2)
@@ -1066,22 +925,6 @@ call this function on '* 2025'"
    ("\\.erb\\'" . web-mode)
    ("\\.mustache\\'" . web-mode)
    ("\\.djhtml\\'" . web-mode)))
-
-;; https://github.com/jrblevin/markdown-mode
-(use-package markdown-mode
-  :ensure t)
-
-;; https://github.com/immerrr/lua-mode
-(use-package lua-mode
-  :ensure t)
-
-;; https://github.com/rust-lang/rust-mode
-(use-package rust-mode
-  :ensure t)
-
-;; https://github.com/tkf/emacs-request
-(use-package request
-  :ensure t)
 
 (provide 'init)
 ;;; init.el ends here
