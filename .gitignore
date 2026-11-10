@@ -1,6 +1,7 @@
 # Emacs file endings
 *~
 .#.*
+\#*#
 
 # Emacs dirs / files
 auto-save-list

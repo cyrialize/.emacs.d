@@ -11,96 +11,144 @@
 ;; - Package & Initial Set Up
 ;;   - Setup for `package.el`, installing packages, and any code I want loaded
 ;;     before everything else.
-;;
 ;; - Built-In Packages
 ;;   - `use-package` declarations for built-in packages
-
-;;
 ;; - Installed Packages
 ;;   - `use-package` declarations for installed packages
 
 ;;; Code:
 
 ;;; Package & Initial Set Up
-
+;;
+;; I use package.el over other package management systems because I found that
+;; I wasn't really taking advantage of all the extra features they offered.
+;;
+;; I take a slightly different approach to package management with package.el.
+;; My approach is based off of these pages:
+;; - https://olivertaylor.net/emacs/notes-on-package-el
+;;   - I originally saw the discussion of this post on /r/emacs
+;;     (https://www.reddit.com/r/emacs/comments/np6ey4/how_packageel_works_with_use_package/)
+;; - https://www.wikemacs.org/wiki/Package.el
+;;   - See the section "Install packages automatically on startup"
+;;
+;; Key points:
+;;
+;; Packages are installed/uninstalled by manually updating
+;; package-selected-packages (instead of allowing customize.el to change it).
+;;
+;; :ensure isn't used with use-package. use-package is only meant for
+;; customizing - all of the code here primarily handles what is/isn't installed.
+;;
+;; Run package-autoremove whenever packages are removed from here.
+;;
+;; Run package-refresh-contents and package-install-selected-packages whenever
+;; packages are added.
+;;
+;; Lines are sorted by highlighting contents and calling sort-lines.
+;;
+;; Dependencies of packages aren't listed here. Package.el handles that, and if
+;; the primary package is removed from this list package-autoremove removes the
+;; dependencies.
+;;
+;; Built-in packages aren't added to the list.
+;;
+;; Use-package declarations only exist for packages where I need customization
+;; and other benefits of use-package. Otherwise, I just leave the package
+;; declared here.
+;;
+;; Notes:
+;;
+;; I could pragmatically add and update the list of packages in
+;; package-selected-packages, but at that point it would be easier to just use
+;; customize.el instead.
 (require 'package)
+(require 'cl-lib)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
+;; Anytime packages are added and removed from this list, run
+;; cyr-refresh-packages
 (setq package-selected-packages
+      ;; Listed packages are on new lines so it is easier to call sort-lines
       '(
-	use-package
-	org-mode
-	org-ql
-	org-super-agenda
-	toc-org
-	pkg-info
-	exec-path-from-shell
-	format-all
-	jinx
-	helm
-	eldoc
-	eldoc-box
-	corfu
 	cape
-	minions
-	whitespace-mode
-	whitespace-cleanup-mode
-	smart-mode-line
-	dashboard
-	god-mode
-	treemacs
-	vertico
-	orderless
-	savehist
-	darcula-theme
-	restart-emacs
-	flymake
-	marginalia
-	embark
-	embark-consult
+	chruby
 	consult
 	consult-dir
-	which-key
+	corfu
+	darcula-theme
+	dashboard
+	ef-themes
+	eldoc-box
+	embark
+	embark-consult
+	exec-path-from-shell
+	format-all
+	ghostel
+	god-mode
+	helm
+	hl-todo
+	inf-ruby
+	jinx
+	lua-mode
 	magit
-	rg
-	treesit-auto
-	xref
-	chruby
+	marginalia
+	markdown-mode
+	minions
 	nerd-icons
 	nerd-icons-completion
 	nerd-icons-corfu
 	nerd-icons-dired
-	inf-ruby
-	yard-mode
-	yasnippet
-	yasnippet-snippets
-	hl-todo
-	web-mode
-	zenburn-theme
-	ef-themes
-	markdown-mode
-	lua-mode
-	tempel
-	ws-butler
-	rust-mode
+	orderless
+	org-ql
+	org-super-agenda
+	pkg-info
 	request
-	ghostel
-
-	;; Required for magit
-	dash
-	transient
-	with-editor
+	restart-emacs
+	rg
+	rust-mode
+	smart-mode-line
+	tempel
+	toc-org
+	treemacs
+	treemacs-icons-dired
+	treemacs-magit
+	treemacs-tab-bar
+	treesit-auto
+	vertico
+	web-mode
+	which-key
+	whitespace-cleanup-mode
+	ws-butler
+	yard-mode
+	zenburn-theme
 	))
 
-(unless (package-installed-p 'use-package)
+(defun cyr-package-sync ()
+  "Install selected packages that are not already installed."
+  (interactive)
+  (unless (cl-every #'package-installed-p package-selected-packages)
+    (package-refresh-contents)
+    (package-install-selected-packages)))
+
+(defun cyr-refresh-packages ()
+  "Refresh package archives, install missing packages, and remove orphans."
+  (interactive)
   (package-refresh-contents)
-  (package-install 'use-package))
+  (package-install-selected-packages)
+  (package-autoremove))
 
-(package-initialize)
+(condition-case err
+    (cyr-package-sync)
+  (error
+   (message "Package sync failed: %s"
+            (error-message-string err))))
 
-(eval-when-compile
-  (require 'use-package))
+(condition-case err
+    (package-autoremove)
+  (error
+   (message "Package cleanup failed: %s"
+            (error-message-string err))))
 
 (defun cyr-exec-path-from-shell ()
   "Run `exec-path-from-shell-initialize` with extra messaging."
@@ -114,14 +162,6 @@
        "Unable to init exec path from shell. Installed %s, Shell system %s"
        exec-path-from-shell-installed
        shell-system))))
-
-(defun cyr-reload-packages ()
-  "Reload packages by calling applicable package.el commands."
-  (interactive)
-  (progn
-    (package-refresh-contents)
-    (package-install-selected-packages)
-    (package-autoremove)))
 
 (defun cyr-load-private ()
   "Load the private.el file if it exists."
@@ -283,7 +323,7 @@ call this function on '* 2025'"
 
   (sentence-end-double-space nil)
 
-  (whitepsace-line-column 80)
+  (whitespace-line-column 80)
 
   :init
   ;; Ask y or n instead of yes or no
@@ -962,15 +1002,6 @@ call this function on '* 2025'"
 (use-package yard-mode
   :ensure t
   :hook (ruby-mode ruby-ts-mode))
-
-;; https://github.com/joaotavora/yasnippet
-(use-package yasnippet
-  :ensure t
-  :hook (after-init . yas-global-mode))
-
-;; https://github.com/AndreaCrotti/yasnippet-snippets
-(use-package yasnippet-snippets
-  :ensure t)
 
 (use-package ruby-mode
   :mode "\\.rb\\'"
