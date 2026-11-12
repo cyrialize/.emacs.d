@@ -38,6 +38,19 @@ package that I'm using.
 Everything is wrapped in ~use-package~. ~consult-outline~ can be used to jump
 from each ~use-package~ declaration.
 
+* Cheatsheet
+Commands I use within Emacs often, for reference here.
+
+** ibuffer
+~M-x ibuffer~
+
+I use this often to see what buffers I've modified and forgot to save:
+~M-x ibuffer-filter-by-modified~
+
+** org-agenda
+I usually do ~M-x org-agenda~ and then on the current day ~M-x org-agenda-day-view~.
+
+This is now in a function: ~cyr-org-agenda-day-view~
 * Resources
 Here are various resources I've referenced in the past that has helped make my
 emacs configuration what it is today:

@@ -87,6 +87,7 @@
 	god-mode
 	helm
 	hl-todo
+	indent-bars
 	inf-ruby
 	jinx
 	lua-mode
@@ -302,6 +303,12 @@ call this function on '* 2025'"
     (progn
       (message (format "File %s does not exist!" file))
       nil)))
+
+(defun cyr-org-agenda-day-view ()
+  "`org-agenda` day view for today."
+  (interactive)
+  (org-agenda nil "a")
+  (org-agenda-day-view))
 
 ;;; Built-In Packages
 
