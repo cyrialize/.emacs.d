@@ -17,6 +17,7 @@ tree-sitter
 .cache*
 ielm-history.eld
 request*
+.emacs.d/.backups*
 
 # Private files
 private.el

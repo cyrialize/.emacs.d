@@ -331,6 +331,11 @@ call this function on '* 2025'"
 
   (whitespace-line-column 80)
 
+  ;; I've never used a backup file, and most people disable this - but there's
+  ;; a part of me that is afraid of the one time that I need a backup file and
+  ;; I don't have it!
+  (backup-directory-alist `(("." . "~/.emacs.d/.backups")))
+
   :init
   ;; Ask y or n instead of yes or no
   (fset 'yes-or-no-p 'y-or-n-p)
