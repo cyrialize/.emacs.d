@@ -4,20 +4,23 @@
 \#*#
 
 # Emacs dirs / files
-auto-save-list
-bookmarks
+.cache*
+.emacs.d/.backups*
 eln-cache
 elpa
-history
-tramp
-transient
-tutorial
-recentf
-tree-sitter
-.cache*
 ielm-history.eld
 request*
-.emacs.d/.backups*
+tramp
+transient
+tree-sitter
+tutorial
+
+# Computer specific Emacs dirs / files
+auto-save-list
+bookmarks
+history
+projects
+recentf
 
 # Private files
 private.el

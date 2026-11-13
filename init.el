@@ -671,6 +671,12 @@ call this function on '* 2025'"
   (sml/setup))
 
 (use-package dashboard
+  :custom
+  (dashboard-items '((projects . 5)
+		     (recents . 5)
+		     (bookmarks . 5)
+		     (agenda . 5)))
+
   :config
   (dashboard-setup-startup-hook))
 
